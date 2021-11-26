@@ -1,5 +1,5 @@
-'use strict';
-const url = 'http://localhost:3000'; // change url when uploading to server
+"use strict";
+const url = "http://10.114.34.8:3000"; // change url when uploading to server
 
 // get query parameter
 const getQParam = (param) => {
@@ -9,14 +9,14 @@ const getQParam = (param) => {
 };
 
 // get id from address
-const cat_id = getQParam('id');
+const cat_id = getQParam("id");
 
 // select existing html elements
-const modForm = document.querySelector('#modCatForm');
-const userList = document.querySelector('.add-owner');
+const modForm = document.querySelector("#modCatForm");
+const userList = document.querySelector(".add-owner");
 
 // get user data for admin check
-const user = JSON.parse(sessionStorage.getItem('user'));
+const user = JSON.parse(sessionStorage.getItem("user"));
 
 // if user is not admin delete owner selection
 if (user.role > 0) userList.remove();
@@ -25,28 +25,28 @@ if (user.role > 0) userList.remove();
 const getCat = async (id) => {
   const fetchOptions = {
     headers: {
-      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
   };
-  const response = await fetch(url + '/cat/' + id, fetchOptions);
+  const response = await fetch(url + "/cat/" + id, fetchOptions);
   const cat = await response.json();
-  const inputs = modForm.querySelectorAll('input');
+  const inputs = modForm.querySelectorAll("input");
   inputs[0].value = cat.name;
   inputs[1].value = cat.birthdate;
   inputs[2].value = cat.weight;
-  if (user.role === 0) modForm.querySelector('select').value = cat.owner;
+  if (user.role === 0) modForm.querySelector("select").value = cat.owner;
 };
 
 // create user options to <select>
 const createUserOptions = (users) => {
   // clear user list
-  userList.innerHTML = '';
+  userList.innerHTML = "";
   users.forEach((user) => {
     // create options with DOM methods
-    const option = document.createElement('option');
+    const option = document.createElement("option");
     option.value = user.user_id;
     option.innerHTML = user.name;
-    option.classList.add('light-border');
+    option.classList.add("light-border");
     userList.appendChild(option);
   });
   // load cat data after users
@@ -58,10 +58,10 @@ const getUsers = async () => {
   try {
     const options = {
       headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
       },
     };
-    const response = await fetch(url + '/user', options);
+    const response = await fetch(url + "/user", options);
     const users = await response.json();
     createUserOptions(users);
   } catch (e) {
@@ -70,33 +70,33 @@ const getUsers = async () => {
 };
 
 // submit modify form
-modForm.addEventListener('submit', async (evt) => {
+modForm.addEventListener("submit", async (evt) => {
   evt.preventDefault();
   const data = serializeJson(modForm);
   // remove empty properties
   for (const [prop, value] of Object.entries(data)) {
-    if (value === '') {
+    if (value === "") {
       delete data[prop];
     }
   }
   const fetchOptions = {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
     body: JSON.stringify(data),
   };
 
   console.log(fetchOptions);
-  const response = await fetch(url + '/cat/' + cat_id, fetchOptions);
+  const response = await fetch(url + "/cat/" + cat_id, fetchOptions);
   const json = await response.json();
   if (json.error) {
     alert(json.error.message);
   } else {
     alert(json.message);
   }
-  location.href = 'front.html';
+  location.href = "front.html";
 });
 
 // start filling the form

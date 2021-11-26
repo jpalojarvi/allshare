@@ -1,20 +1,20 @@
-'use strict';
-const url = 'http://localhost:3000'; // change url when uploading to server
+"use strict";
+const url = "http://10.114.34.8:3000"; // change url when uploading to server
 
 // select existing html elements
-const addForm = document.querySelector('#addCatForm');
-const userList = document.querySelector('.add-owner');
+const addForm = document.querySelector("#addCatForm");
+const userList = document.querySelector(".add-owner");
 
 // create user options to <select>
 const createUserOptions = (users) => {
   // clear user list
-  userList.innerHTML = '';
+  userList.innerHTML = "";
   users.forEach((user) => {
     // create options with DOM methods
-    const option = document.createElement('option');
+    const option = document.createElement("option");
     option.value = user.user_id;
     option.innerHTML = user.name;
-    option.classList.add('light-border');
+    option.classList.add("light-border");
     userList.appendChild(option);
   });
 };
@@ -22,7 +22,7 @@ const createUserOptions = (users) => {
 // get users to form options
 const getUsers = async () => {
   try {
-    const response = await fetch(url + '/user');
+    const response = await fetch(url + "/user");
     const users = await response.json();
     createUserOptions(users);
   } catch (e) {
@@ -32,15 +32,15 @@ const getUsers = async () => {
 getUsers();
 
 // submit add cat form
-addForm.addEventListener('submit', async (evt) => {
+addForm.addEventListener("submit", async (evt) => {
   evt.preventDefault();
   const fd = new FormData(addForm);
   const fetchOptions = {
-    method: 'POST',
+    method: "POST",
     body: fd,
   };
-  const response = await fetch(url + '/cat', fetchOptions);
+  const response = await fetch(url + "/cat", fetchOptions);
   const json = await response.json();
   alert(json.message);
-  location.href = 'front.html';
+  location.href = "front.html";
 });
