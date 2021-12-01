@@ -37,7 +37,7 @@ figure {
 }
 
 .forms {
-  display: flex;
+  
   flex-wrap: wrap;
 }
 
@@ -45,7 +45,7 @@ figure {
   width: 33%;
 }
 
-input, button, select {
+input, select {
   display: inline-block;
   width: 100%;
   margin: .5em 0;
@@ -63,8 +63,11 @@ select {
 }
 
 button{
-  background-color: #ccc;
+  background-color: rgb(233, 103, 103);
   color: #111111;
+  height: 30px;
+  width: auto;
+
 }
 
 .hide {

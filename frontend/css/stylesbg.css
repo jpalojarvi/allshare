@@ -41,7 +41,7 @@ body {
 	font-weight: bold;
   }
   .topnav a:hover {
-	
+	cursor: pointer;
 	color: #F3A712;
   }
   

@@ -18,8 +18,29 @@
 
   <body>
     <div class="container">
-      <div class="forms" id="login-wrapper">
-        <div class="form-wrapper" id="loginWindow">
+      <nav class="topnav" id="myTopnav">
+        <img
+          id="bglintu"
+          src="logot/birdstagramlogo3.png"
+          alt="pieni lintulogo"
+        />
+        <a id="bgnimi">Birds<span id="nimi">tagram</span></a>
+        <div class="search-container">
+          <form action="">
+            <input type="text" placeholder="Haku.." name="search" />
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </form>
+        </div>
+
+        <a onclick="rekisteroidyFunktio()" id="rek">Rekisteröidy</a>
+        <a onclick="kirjauduFunktio()">Kirjaudu</a>
+        <a href="#index.html" class="active">Etusivu</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </nav>
+      <div class="forms" id="login-wrapper" style="display: none">
+        <div class="form-wrapper">
           <h3>Login</h3>
           <form id="login-form" class="light-border">
             <div>
@@ -35,6 +56,8 @@
             </div>
           </form>
         </div>
+      </div>
+      <div class="forms" id="register-wrapper" style="display: none">
         <div class="form-wrapper">
           <h3>Register</h3>
           <form class="light-border" id="add-user-form">
@@ -62,27 +85,6 @@
           </form>
         </div>
       </div>
-      <nav class="topnav" id="myTopnav">
-        <img
-          id="bglintu"
-          src="logot/birdstagramlogo3.png"
-          alt="pieni lintulogo"
-        />
-        <a id="bgnimi">Birds<span id="nimi">tagram</span></a>
-        <div class="search-container">
-          <form action="">
-            <input type="text" placeholder="Haku.." name="search" />
-            <button type="submit"><i class="fa fa-search"></i></button>
-          </form>
-        </div>
-
-        <a href="#register.html" id="rek">Rekisteröidy</a>
-		<a href="#login.html">Kirjaudu</a>		
-		<a href="#index.html" class="active">Etusivu</a>
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-          <i class="fa fa-bars"></i>
-        </a>
-      </nav>
       <header id="log-out" style="display: none">
         <div class="bgkuva">
           <img
@@ -91,7 +93,6 @@
             alt="lintuja aurongonlaskussa"
           />
         </div>
-        
       </header>
 
       <main style="display: none">
@@ -100,13 +101,13 @@
           <p id="otsikonpikkuteksti">Kuvaa, videota ja ääntä</p>
           <h1>Lintugalleria</h1>
         </section>
-        
+
         <section id="valokuvat">
           <h1 id="uusimmat">Uusimmat kuvat</h1>
-        <ul >
-          <!-- js creates list here -->
-        </ul>
-      </section>
+          <ul>
+            <!-- js creates list here -->
+          </ul>
+        </section>
         <hr />
         <div class="forms">
           <div class="form-wrapper">
