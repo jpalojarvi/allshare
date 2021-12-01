@@ -1,0 +1,187 @@
+* {
+    /*box-sizing: border-box;*/
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+body {
+	max-width: 1920px;
+	margin: auto;
+	height: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	display: block;
+	background-color: #FFFBFA;
+	color: #222222;
+}
+.topnav {
+	overflow: hidden;
+	padding-right: 3%;
+	position: -webkit-sticky;
+  	position: sticky;
+  	top: 0;
+	  background-color: #FFFBFA;
+}
+.topnav a {
+	float: right;
+	display: block;
+	color: #222222;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 1rem;
+  }
+  .topnav #bgnimi {
+	float: left;
+	display: block;
+	color: #222222;
+	text-align: center;
+	padding: 14px 1% 14px 1%;
+	text-decoration: none;
+	font-size: 1rem;
+	font-weight: bold;
+  }
+  .topnav a:hover {
+	
+	color: #F3A712;
+  }
+  
+  .topnav a.active {
+	color: #F3A712;
+  }
+  
+  .topnav .icon {
+	display: none;
+  }
+  .topnav .search-container {
+	  
+	float: left;
+	display: block;
+	padding-left: 1%;
+  }
+  .topnav input[type=text] {
+	  width: 75%;
+	padding: 5px;
+	margin-top: 8px;
+	font-size: 1rem;
+	border: 1px solid;
+	border-color: #7C7C7C;
+	border-radius: 5px;
+  }
+  .topnav .search-container button {
+	  width: auto;
+	float: right;
+	padding: 6px 10px;
+	margin-top: 8px;
+	margin-left: 3px;
+	margin-right: 3px;
+	background: #F3A712;
+	color: #FFFBFA;
+	font-size: 1rem;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+  }
+  .topnav .search-container button:hover {
+	background:#7C7C7C;
+  }
+#bglintu{
+	height: 40px;
+	margin: 3px 0px 3px 5%;
+	float: left;
+	display: block;
+}
+#nimi {
+	color: #F3A712;
+}
+
+header {
+	width: 100%;
+}
+main {
+    width: 100%;
+    height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+#user-info {
+	margin-left: 5%;
+	font-weight: bold;
+}
+#uusimmat {
+	margin-left: 5%;
+	font-weight: bold;
+	padding: 1%;
+	color: #FFFBFA;
+}
+
+h1{
+	margin: 0;
+	padding: 0;
+	font-size: 1.5em;
+}
+#otsikonpikkuteksti{
+	margin: 0;
+	padding: 0 0 4px 0;
+	color: #F3A712;
+	font-size: 0.86em;
+}
+.bgkuva{
+	margin-bottom: 40px;
+}
+#bglinnut{
+	max-width: 100%;
+}
+#otsikko{
+	background-color: white;
+	text-align: left;
+	padding: 30px 50px;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 15px;
+	margin-bottom: 50px;
+}
+
+#valokuvat, #aanet{
+	background-color: #7C7C7C;
+	max-width: 100%;
+	
+}
+ul {
+	margin: 0% 5%;
+}
+@media screen and (max-width: 760px) {
+	.topnav a:not(:first-child) {display: none;}
+	.topnav a.icon {
+	  float: right;
+	  display: block;
+	  font-size: 1.2rem;
+	}
+	.bgkuva{
+		margin-bottom: 20px;
+	}
+  }
+  @media screen and (max-width: 760px) {
+	.topnav.responsive {position: relative;}
+	.topnav.responsive .icon {
+	  position: absolute;
+	  right: 0;
+	  top: 0;
+	}
+	.topnav.responsive a {
+	  float: none;
+	  display: block;
+	  text-align: right;
+	}
+	.topnav.responsive #rek {
+		margin-top: 40px;
+	  }
+  }
+  @media screen and (max-width: 520px) {
+	.topnav #bgnimi{
+		display: none;
+	}
+	.bgkuva{
+		margin-bottom: 10px;
+	}
+  }

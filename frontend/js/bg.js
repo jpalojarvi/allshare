@@ -6,3 +6,12 @@ function myFunction() {
       x.className = "topnav";
     }
   } 
+  function kirjauduNappula ()
+{
+    var x = document.getElementById("loginWindow");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+  }
