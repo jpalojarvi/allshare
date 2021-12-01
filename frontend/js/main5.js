@@ -25,7 +25,7 @@ console.log(user);
 const startApp = (logged) => {
   console.log(logged);
   // show/hide forms + birds
-  loginWrapper.style.display = logged ? "none" : "flex";
+  loginWrapper.style.display = logged ? "none" : "none";
   logOut.style.display = logged ? "flex" : "none";
   main.style.display = logged ? "flex" : "none";
   userInfo.innerHTML = logged ? `Hello ${user.name}` : "";
