@@ -15,7 +15,6 @@
     <link href="./css/style5.css" rel="stylesheet" />
     <link href="./css/stylesbg.css" rel="stylesheet" />
     <link href="./css/modal.css" rel="stylesheet" />
-    
   </head>
 
   <body>
@@ -23,7 +22,7 @@
       <nav class="topnav" id="myTopnav">
         <img
           id="bglintu"
-          src="./logot/birdstagramlogo3.png"
+          src="logot/birdstagramlogo3.png"
           alt="pieni lintulogo"
         />
         <a id="bgnimi">Birds<span id="nimi">tagram</span></a>
@@ -33,15 +32,21 @@
             <button type="submit"><i class="fa fa-search"></i></button>
           </form>
         </div>
-
-        <a onclick="rekisteroidyFunktio()">Rekisteröidy</a>
+        <div id="navbar-public">
+        <a onclick="rekisteroidyFunktio()" id="rek">Rekisteröidy</a>
         <a onclick="kirjauduFunktio()">Kirjaudu</a>
-        <a href="./index.html" class="active">Etusivu</a>
+        <a href="index.html" class="active">Etusivu</a>
+        </div>
+        <div id="navbar-user" style="display: none;">
+          <a id="log-out">Poistu</a>
+          <a onclick="omatTiedotFunktio()">Omat tiedot</a>
+          <a href="index.html" class="active">Etusivu</a>
+          </div>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
           <i class="fa fa-bars"></i>
         </a>
       </nav>
-      <section class="forms" id="login-wrapper" style="display: none">
+      <!--<div class="forms" id="login-wrapper" style="display: none">
         <div class="form-wrapper">
           <h3>Login</h3>
           <form id="login-form" class="light-border">
@@ -58,11 +63,66 @@
             </div>
           </form>
         </div>
-      </section>
-      <section class="forms" id="register-wrapper" style="display: none">
+      </div>-->
+
+      <div id="login-wrapper" class="modal">
+        <form
+          class="modal-content animate"
+          
+          id="login-form"
+        >
+          <div class="imgcontainer">
+            <span
+              onclick="document.getElementById('login-wrapper').style.display='none'"
+              class="close"
+              title="Close Modal"
+              >&times;</span
+            >
+            <h2>Kirjautuminen</h2>
+          </div>
+  
+          <div class="container">
+            <label for="uname"><b>Käyttäjätunnus</b></label>
+            <input
+              type="text"
+              placeholder="Kirjoita käyttäjätunnuksesi"
+              name="username"
+              required
+            />
+  
+            <label for="psw"><b>Salasana</b></label>
+            <input
+              type="password"
+              placeholder="Kirjoita salasanasi"
+              name="password"
+              required
+            />
+  
+            <button type="submit">Kirjaudu</button>
+          </div>
+  
+          <div
+            class="container"
+            id="modalfooter"
+            style="background-color: #f2f2f2"
+          >
+            <button
+              type="button"
+              onclick="document.getElementById('login-wrapper').style.display='none'"
+              class="cancelbtn"
+            >
+              Peruuta
+            </button>
+            <span class="psw"><a href="#">Unohditko salasanasi?</a></span>
+          </div>
+        </form>
+      </div>
+
+      <div class="forms" id="register-wrapper" style="display: none">
         <div class="form-wrapper">
           <h3>Register</h3>
           <form class="light-border" id="add-user-form">
+            <p>Nimi</p>
             <input
               class="light-border"
               type="text"
@@ -71,88 +131,25 @@
               placeholder="Name"
               required
             />
+            <p>Sähköpostiosoite</p>
             <input
               class="light-border"
               type="email"
-              name="username"
+              name="email"
               placeholder="email"
             />
+            <p>Salasana</p>
             <input
               class="light-border"
               type="password"
-              name="password"
+              name="passwd"
               placeholder="Password"
             />
-            <button class="light-border" type="submit">Save</button>
+            <button type="submit">Save</button>
           </form>
         </div>
-      </section>
-
-    <!--  <button
-      onclick="document.getElementById('id01').style.display='block'"
-      style="width: auto"
-    >
-      Kirjaudu
-    </button>
-
-    <div id="id01" class="modal">
-      <form
-        class="modal-content animate"
-        action="/action_page.php"
-        method="post"
-      >
-        <div class="imgcontainer">
-          <span
-            onclick="document.getElementById('id01').style.display='none'"
-            class="close"
-            title="Close Modal"
-            >&times;</span
-          >
-          <h2>Kirjautuminen</h2>
-        </div>
-
-        <div class="container">
-          <label for="uname"><b>Käyttäjätunnus</b></label>
-          <input
-            type="text"
-            placeholder="Kirjoita käyttäjätunnuksesi"
-            name="username"
-            required
-          />
-
-          <label for="psw"><b>Salasana</b></label>
-          <input
-            type="password"
-            placeholder="Kirjoita salasanasi"
-            name="password"
-            required
-          />
-
-          <button type="submit">Kirjaudu</button>
-          <label>
-            <input type="checkbox" checked="checked" name="remember" /> Muista
-            minut
-          </label>
-        </div>
-
-        <div
-          class="container"
-          id="modalfooter"
-          style="background-color: #f1f1f1"
-        >
-          <button
-            type="button"
-            onclick="document.getElementById('id01').style.display='none'"
-            class="cancelbtn"
-          >
-            Peruuta
-          </button>
-          <span class="psw"><a href="#">Unohditko salasanasi?</a></span>
-        </div>
-      </form>
-    </div> -->
-
-      <header id="log-out" style="display: none">
+      </div>
+      <header>
         <div class="bgkuva">
           <img
             id="bglinnut"
@@ -176,7 +173,7 @@
           </ul>
         </section>
         <hr />
-        <div class="forms">
+        <div class="forms" id="add-cat" style="display: none;">
           <div class="form-wrapper">
             <h3>Add cat</h3>
             <form
