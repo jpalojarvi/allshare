@@ -7,7 +7,7 @@ const navBarPublic = document.querySelector('#navbar-public');
 const navBarUser = document.querySelector('#navbar-user');
 const userInfo = document.querySelector('#user-info');
 const logOut = document.querySelector('#log-out');
-const main = document.querySelector('main');
+const otsikko = document.querySelector('#otsikko');
 const loginForm = document.querySelector('#login-form');
 const addUserForm = document.querySelector('#add-user-form');
 const addForm = document.querySelector('#add-cat-form');
@@ -23,6 +23,7 @@ const dt = luxon.DateTime;
 
 // get user from sessionStorage
 let user = JSON.parse(sessionStorage.getItem('user'));
+
 console.log(user);
 const startApp = (logged) => {
   console.log(logged);
@@ -31,23 +32,29 @@ const startApp = (logged) => {
   navBarUser.style.display = logged ? 'block' : 'none';
   loginWrapper.style.display = logged ? 'none' : 'none';
   //logOut.style.display = logged ? 'flex' : 'none';
-  //main.style.display = logged ? 'flex' : 'none';
-  userInfo.innerHTML = logged ? `Hello ${user.name}` : '';
+  otsikko.style.display = logged ? 'none' : 'block';
+  userInfo.innerHTML = logged ? `<span id="nimi">Hei</span> ${user.name}` : '';
   if (logged) {
     if (user?.role > 0) {
+      
       userList.remove();
     }
     getCat();
     getUsers();
+  }else {
+    getCats();
   }
+  
 };
 
 // create cat cards
 const createCatCards = (cats) => {
+  console.log('cats from getCat or getCats ', cats);
   // clear ul
   ul.innerHTML = '';
   cats.forEach((cat) => {
     // create li with DOM methods
+    console.log('one cat', cat);
     const img = document.createElement('img');
     img.src = cat.filename;
     img.alt = cat.name;
@@ -97,7 +104,7 @@ const createCatCards = (cats) => {
     li.appendChild(p2);
     li.appendChild(p3);
     ul.appendChild(li);
-    if (user.role === 0 || user.user_id === cat.owner) {
+    if (user.role === 0 || user.user_id === cat.owner || user.role === 1) {    
       // add modify button
       const modButton = document.createElement('button');
       modButton.innerHTML = 'Modify';
@@ -154,7 +161,17 @@ const getCat = async () => {
         Authorization: 'Bearer ' + sessionStorage.getItem('token'),
       },
     };
-    const response = await fetch(url + '/cat', options);
+    const response = await fetch(url + '/cat', options); 
+    const cats = await response.json();
+    createCatCards(cats);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const getCats = async () => {
+  try {
+    const response = await fetch(url + '/cat');
     const cats = await response.json();
     createCatCards(cats);
   } catch (e) {
@@ -271,6 +288,7 @@ logOut.addEventListener('click', async (evt) => {
     sessionStorage.removeItem('user');
     alert('You have logged out');
     startApp(false);
+    location.reload(); //ladataan sivu uudestaan
   } catch (e) {
     console.log(e.message);
   }
