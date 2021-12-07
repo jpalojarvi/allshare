@@ -33,8 +33,8 @@
           </form>
         </div>
         <div id="navbar-public">
-        <a onclick="rekisteroidyFunktio()" id="rek">Rekisteröidy</a>
-        <a onclick="kirjauduFunktio()">Kirjaudu</a>
+        <a id="rekisteroidy">Rekisteröidy</a>
+        <a id="kirjaudu">Kirjaudu</a>
         <a href="index.html" class="active">Etusivu</a>
         </div>
         <div id="navbar-user" style="display: none;">
@@ -46,29 +46,10 @@
           <i class="fa fa-bars"></i>
         </a>
       </nav>
-      <!--<div class="forms" id="login-wrapper" style="display: none">
-        <div class="form-wrapper">
-          <h3>Login</h3>
-          <form id="login-form" class="light-border">
-            <div>
-              <label>Email:</label>
-              <input class="light-border" type="text" name="username" />
-            </div>
-            <div>
-              <label>Password:</label>
-              <input class="light-border" type="password" name="password" />
-            </div>
-            <div>
-              <button class="light-border" type="submit">Log In</button>
-            </div>
-          </form>
-        </div>
-      </div>-->
-
+      <!-- Login modaali-->
       <div id="login-wrapper" class="modal">
         <form
           class="modal-content animate"
-          
           id="login-form"
         >
           <div class="imgcontainer">
@@ -80,27 +61,23 @@
             >
             <h2>Kirjautuminen</h2>
           </div>
-  
           <div class="container">
-            <label for="uname"><b>Käyttäjätunnus</b></label>
+            <label for="username"><b>Sähköpostiosoite</b></label>
             <input
               type="text"
-              placeholder="Kirjoita käyttäjätunnuksesi"
+              placeholder="Kirjoita sähköpostiosoitteesi"
               name="username"
               required
             />
-  
-            <label for="psw"><b>Salasana</b></label>
+            <label for="passwd"><b>Salasana</b></label>
             <input
               type="password"
               placeholder="Kirjoita salasanasi"
               name="password"
               required
             />
-  
             <button type="submit">Kirjaudu</button>
           </div>
-  
           <div
             class="container"
             id="modalfooter"
@@ -117,38 +94,65 @@
           </div>
         </form>
       </div>
+      <!-- Register modaali uusi -->
 
-      <div class="forms" id="register-wrapper" style="display: none">
-        <div class="form-wrapper">
-          <h3>Register</h3>
-          <form class="light-border" id="add-user-form">
-            <p>Nimi</p>
+      <div id="register-wrapper" class="modal">
+        <form
+          class="modal-content animate"
+          id="add-user-form"
+        >
+          <div class="imgcontainer">
+            <span
+              onclick="document.getElementById('register-wrapper').style.display='none'"
+              class="close"
+              title="Close Modal"
+              >&times;</span
+            >
+            <h2>Rekisteröinti</h2>
+          </div>
+  
+          <div class="container">
+            <label for="name"><b>Käyttäjätunnus</b></label>
             <input
-              class="light-border"
               type="text"
+              placeholder="Kirjoita käyttäjätunnuksesi"
               name="name"
-              pattern=".{3,}"
-              placeholder="Name"
               required
             />
-            <p>Sähköpostiosoite</p>
+            <label for="email"><b>Sähköpostiosoite</b></label>
             <input
-              class="light-border"
               type="email"
+              placeholder="Kirjoita sähköpostiosoitteesi"
               name="email"
-              placeholder="email"
+              required
             />
-            <p>Salasana</p>
+            <label for="psw"><b>Salasana</b></label>
             <input
-              class="light-border"
               type="password"
+              placeholder="Kirjoita salasanasi"
               name="passwd"
-              placeholder="Password"
+              required
             />
-            <button type="submit">Save</button>
-          </form>
-        </div>
+            <button type="submit">Rekisteröi</button>
+          </div>
+  
+          <div
+            class="container"
+            id="modalfooter"
+            style="background-color: #f1f1f1"
+          >
+            <button
+              type="button"
+              onclick="document.getElementById('register-wrapper').style.display='none'"
+              class="cancelbtn"
+            >
+              Peruuta
+            </button>
+          </div>
+        </form>
       </div>
+
+      <!-- Header-->
       <header>
         <div class="bgkuva">
           <img
@@ -159,6 +163,7 @@
         </div>
       </header>
 
+      <!-- Main , media-->
       <main style="display: flex">
         <p id="user-info"></p>
         <section id="otsikko">

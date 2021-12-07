@@ -60,11 +60,10 @@ select {
 }
 
 button{
-  background-color: rgb(233, 103, 103);
-  color: #111111;
+
   height: 30px;
   width: auto;
-
+  
 }
 
 .hide {
