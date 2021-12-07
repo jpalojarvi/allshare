@@ -6,7 +6,7 @@ const promisePool = pool.promise();
 const getAllUsers = async (next) => {
   try {
     const [rows] = await promisePool.execute(
-      'SELECT user_id, name, email, role FROM wop_user'
+      'SELECT Kayttajanumero, Kayttajanimi, Sahkopostiosoite, Roolinumero FROM Kayttaja'
     );
     return rows;
   } catch (e) {
@@ -18,7 +18,7 @@ const getAllUsers = async (next) => {
 const getUser = async (id, next) => {
   try {
     const [rows] = await promisePool.execute(
-      'SELECT user_id, name, email, role FROM wop_user WHERE user_id = ?',
+      'SELECT Kayttajanumero, Kayttajanimi, Sahkopostiosoite, Roolinumero FROM Kayttaja WHERE Kayttajanumero = ?',
       [id]
     );
     return rows;
@@ -31,7 +31,7 @@ const getUser = async (id, next) => {
 const addUser = async (name, email, password, next) => {
   try {
     const [rows] = await promisePool.execute(
-      'INSERT INTO wop_user (name, email, password) VALUES (?, ?, ?)',
+      'INSERT INTO Kayttaja (Kayttajanimi, Sahkopostiosoite, Salasana) VALUES (?, ?, ?)',
       [name, email, password]
     );
     return rows;
@@ -45,7 +45,7 @@ const getUserLogin = async (params) => {
   try {
     console.log('getUserLogin', params);
     const [rows] = await promisePool.execute(
-      'SELECT * FROM wop_user WHERE email = ?;',
+      'SELECT * FROM Kayttaja WHERE Sahkopostiosoite = ?;',
       params
     );
     return rows;
