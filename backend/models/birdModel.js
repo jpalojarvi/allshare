@@ -8,16 +8,13 @@ const getAllBirds = async (next) => {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
     const [rows] = await promisePool.execute(`
 	SELECT 
-	bird_id, 
-	wop_bird.name, 
-	weight, 
-	owner, 
-	filename,
-	birthdate,
-	coords, 
-	wop_user.name as ownername 
-	FROM wop_bird 
-	JOIN wop_user ON 
+	Tiedostonumero, 
+	Tiedostonimi, 
+	Luomispaikka, 
+	Kuvaus, 
+	Kayttajanumero,
+	FROM Tiedosto
+	JOIN Laji ON 
 	wop_bird.owner = wop_user.user_id`);
     return rows;
   } catch (e) {
@@ -53,18 +50,17 @@ const getBird = async (id, next) => {
 };
 
 const addBird = async (
-  name,
-  weight,
-  owner,
-  birthdate,
-  filename,
-  coords,
+  Tiedostonimi,
+  Lisaysaika,
+  Luomispaikka,
+  Kuvaus,
+  Kayttajanumero,
   next
 ) => {
   try {
     const [rows] = await promisePool.execute(
-      "INSERT INTO wop_bird (name, weight, owner, filename, birthdate, coords) VALUES (?, ?, ?, ?, ?, ?)",
-      [name, weight, owner, filename, birthdate, coords]
+      "INSERT INTO Tiedosto (Tiedostonimi, Lisaysaika, Luomispaikka, Kuvaus, Kayttajanumero) VALUES (?, ?, ?, ?, ?)",
+      [Tiedostonimi, Lisaysaika, Luomispaikka, Kuvaus, Kayttajanumero]
     );
     return rows;
   } catch (e) {
