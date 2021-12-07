@@ -20,17 +20,14 @@ const {
 } = require("../controllers/birdController");
 const router = express.Router();
 
-router
-  .route("/")
-  .get(bird_list_get)
-  .post(
-    passport.authenticate("jwt", { session: false }),
-    upload.single("bird"),
-    body("name").notEmpty().escape(),
-    body("birthdate").isDate(),
-    body("weight").isNumeric(),
-    bird_post
-  );
+router.route("/").get(bird_list_get).post(
+  //passport.authenticate("jwt", { session: false }),
+  upload.single("bird"),
+  body("name").notEmpty().escape(),
+  body("birthdate").isDate(),
+  body("weight").isNumeric(),
+  bird_post
+);
 
 router
   .route("/:id")
