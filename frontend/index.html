@@ -152,6 +152,62 @@
         </form>
       </div>
 
+      <!-- Lisää lintu modal-->
+
+      <div id="id01" class="modal">
+        <form
+          class="modal-content animate"
+          action="/action_page.php"
+          method="post"
+        >
+          <div class="imgcontainer">
+            <span
+              onclick="document.getElementById('id01').style.display='none'"
+              class="close"
+              title="Close Modal"
+              >&times;</span
+            >
+            <h2>Lisää lintu</h2>
+          </div>
+  
+          <div class="container">
+            <label for="uname"><b>Lajin nimi</b></label>
+            <label for="ajax">Pick an HTML Element (options loaded using AJAX)</label>
+            <input type="text" id="ajax" list="json-datalist" placeholder="e.g. datalist">
+            <datalist id="json-datalist"></datalist>
+  
+  
+            
+            <textarea type="lintukuvaus" name="lintukuvaus" rows="4" cols="50" placeholder="Kirjoita kuvaus linnustasi">
+              </textarea>
+              <br><br>
+            </form>
+  
+            <form>
+              <label for="myfile">Valitse tiedosto:</label>
+              <br />
+              <input type="file" id="myfile" name="myfile" />
+            </form>
+  
+            <button type="submit">Lisää lintu</button>
+          </div>
+  
+          <div
+            class="container"
+            id="modalfooter"
+            style="background-color: #f1f1f1"
+          >
+            <button
+              type="button"
+              onclick="document.getElementById('id01').style.display='none'"
+              class="cancelbtn"
+            >
+              Peruuta
+            </button>
+          </div>
+        </form>
+      </div>
+
       <!-- Header-->
       <header>
         <div class="bgkuva">
@@ -173,6 +229,12 @@
 
         <section id="valokuvat">
           <h1 id="uusimmat">Uusimmat kuvat</h1>
+          <button
+      onclick="document.getElementById('id01').style.display='block'"
+      style="width: auto"
+    >
+      Lisää lintu
+    </button>
           <ul>
             <!-- js creates list here -->
           </ul>
