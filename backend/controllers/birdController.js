@@ -3,6 +3,7 @@ const { validationResult } = require("express-validator");
 // birdController
 const {
   getAllBirds,
+  getBirdsByKeyword,
   getBird,
   addBird,
   modifyBird,
@@ -15,6 +16,20 @@ const { makeThumbnail } = require("../utils/resize");
 const bird_list_get = async (req, res, next) => {
   try {
     const birds = await getAllBirds(next);
+    if (birds.length > 0) {
+      res.json(birds);
+    } else {
+      next("No birds found", 404);
+    }
+  } catch (e) {
+    console.log("bird_list_get error", e.message);
+    next(httpError("internal server error", 500));
+  }
+};
+
+const bird_list_by_keyword_get = async (req, res, next) => {
+  try {
+    const birds = await getBirdsByKeyword(next);
     if (birds.length > 0) {
       res.json(birds);
     } else {
@@ -160,6 +175,7 @@ const bird_delete = async (req, res, next) => {
 
 module.exports = {
   bird_list_get,
+  bird_list_by_keyword_get,
   bird_get,
   bird_post,
   bird_put,

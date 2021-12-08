@@ -23,6 +23,21 @@ const getAllBirds = async (next) => {
   }
 };
 
+const getBirdsByKeyword = async (next) => {
+  try {
+    // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
+    const [rows] = await promisePool.execute(`
+	SELECT 
+  Lajinumero,
+	Suominimi, 
+	FROM laji`);
+    return rows;
+  } catch (e) {
+    console.error("getBirdsByKeyword error", e.message);
+    next(httpError("Database error", 500));
+  }
+};
+
 const getBird = async (id, next) => {
   try {
     const [rows] = await promisePool.execute(
@@ -116,6 +131,7 @@ const deleteBird = async (id, owner_id, role, next) => {
 
 module.exports = {
   getAllBirds,
+  getBirdsByKeyword,
   getBird,
   addBird,
   modifyBird,
