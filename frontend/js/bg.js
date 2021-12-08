@@ -31,6 +31,7 @@ document.getElementById("rekisteroidy").addEventListener("click", rekisteroi);
 // Get the modal
 var modal = document.getElementById("register-wrapper");
 var modallog = document.getElementById("login-wrapper");
+var modaladd = document.getElementById("id01");
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modallog) {
@@ -38,6 +39,9 @@ window.onclick = function (event) {
   }
   if (event.target == modal) {
     modal.style.display = "none";
+  }
+  if (event.target == modaladd) {
+    modaladd.style.display = "none";
   }
 };
 
