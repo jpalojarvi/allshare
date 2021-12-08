@@ -51,16 +51,18 @@ const getBird = async (id, next) => {
 
 const addBird = async (
   Tiedostonimi,
-  Lisaysaika,
   Luomispaikka,
   Kuvaus,
   Kayttajanumero,
+  Lajinumero,
   next
 ) => {
   try {
     const [rows] = await promisePool.execute(
-      "INSERT INTO Tiedosto (Tiedostonimi, Lisaysaika, Luomispaikka, Kuvaus, Kayttajanumero) VALUES (?, ?, ?, ?, ?)",
-      [Tiedostonimi, Lisaysaika, Luomispaikka, Kuvaus, Kayttajanumero]
+      "INSERT INTO tiedosto (Tiedostonimi, Luomispaikka, Kuvaus, Kayttajanumero) VALUES (?, ?, ?, ?, ?)",
+      [Tiedostonimi, Luomispaikka, Kuvaus, Kayttajanumero],
+      "INSERT INTO relationship (Lajinumero, Tiedostonumero)VALUES (?, LAST_INSERT_ID()",
+      [Lajinumero]
     );
     return rows;
   } catch (e) {
