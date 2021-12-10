@@ -8,6 +8,7 @@ const navBarUser = document.querySelector('#navbar-user');
 const userInfo = document.querySelector('#user-info');
 const logOut = document.querySelector('#log-out');
 const otsikko = document.querySelector('#otsikko');
+const linnunlisays = document.querySelector('#linnun-lisays');
 const loginForm = document.querySelector('#login-form');
 const addUserForm = document.querySelector('#add-user-form');
 const addForm = document.querySelector('#add-cat-form');
@@ -33,40 +34,41 @@ const startApp = (logged) => {
   loginWrapper.style.display = logged ? 'none' : 'none';
   //logOut.style.display = logged ? 'flex' : 'none';
   otsikko.style.display = logged ? 'none' : 'block';
-  userInfo.innerHTML = logged ? `<span id="nimi">Hei</span> ${user.name}` : '';
+  linnunlisays.style.display = logged ? 'block' : 'none';
+  userInfo.innerHTML = logged ? `<span id="nimi">Hei</span> ${user.Kayttajanimi}` : '';
+  
   if (logged) {
     if (user?.role > 0) {
       
       userList.remove();
     }
-    getCat();
+    getBird();
     getUsers();
   }else {
-    getCats();
+    getBirds();
   }
-  
 };
 
-// create cat cards
-const createCatCards = (cats) => {
-  console.log('cats from getCat or getCats ', cats);
+// create bird cards
+const createBirdCards = (birds) => {
+  console.log('birds from getBird or getBirds ', birds);
   // clear ul
   ul.innerHTML = '';
-  cats.forEach((cat) => {
+  birds.forEach((bird) => {
     // create li with DOM methods
-    console.log('one cat', cat);
+    console.log('one bird', bird);
     const img = document.createElement('img');
-    img.src = cat.filename;
-    img.alt = cat.name;
+    img.src = bird.filename;
+    img.alt = bird.name;
     img.classList.add('resp');
 
     // open large image when clicking image
     img.addEventListener('click', () => {
-      modalImage.src = url + '/' + cat.filename;
-      imageModal.alt = cat.name;
+      modalImage.src = url + '/' + bird.filename;
+      imageModal.alt = bird.name;
       imageModal.classList.toggle('hide');
       try {
-        const coords = JSON.parse(cat.coords);
+        const coords = JSON.parse(bird.coords);
         // console.log(coords);
         addMarker(coords);
       } catch (e) {}
@@ -79,20 +81,20 @@ const createCatCards = (cats) => {
 
     const p1 = document.createElement('p');
     p1.innerHTML = `Birthdate: ${dt
-      .fromISO(cat.birthdate)
+      .fromISO(bird.birthdate)
       .setLocale('fi')
       .toLocaleString()}`;
     const p1b = document.createElement('p');
     p1b.innerHTML = `Age: ${dt
       .now()
-      .diff(dt.fromISO(cat.birthdate), ['year'])
+      .diff(dt.fromISO(bird.birthdate), ['year'])
       .toFormat('y')}`;
 
     const p2 = document.createElement('p');
-    p2.innerHTML = `Weight: ${cat.weight}kg`;
+    p2.innerHTML = `Weight: ${bird.weight}kg`;
 
     const p3 = document.createElement('p');
-    p3.innerHTML = `Owner: ${cat.ownername}`;
+    p3.innerHTML = `Owner: ${bird.ownername}`;
 
     const li = document.createElement('li');
     li.classList.add('light-border');
@@ -110,11 +112,11 @@ const createCatCards = (cats) => {
       modButton.innerHTML = 'Modify';
       modButton.addEventListener('click', () => {
         const inputs = modForm.querySelectorAll('input');
-        inputs[0].value = cat.name;
-        inputs[1].value = cat.birthdate;
-        inputs[2].value = cat.weight;
-        modForm.action = `${url}/cat/${cat.cat_id}`;
-        if (user.role === 0) modForm.querySelector('select').value = cat.owner;
+        inputs[0].value = bird.name;
+        inputs[1].value = bird.birthdate;
+        inputs[2].value = bird.weight;
+        modForm.action = `${url}/cat/${bird.bird_id}`;
+        if (user.role === 0) modForm.querySelector('select').value = bird.owner;
       });
 
       // delete selected cat
@@ -129,12 +131,12 @@ const createCatCards = (cats) => {
         };
         try {
           const response = await fetch(
-            url + '/cat/' + cat.cat_id,
+            url + '/bird/' + cat.cat_id,
             fetchOptions
           );
           const json = await response.json();
           console.log('delete response', json);
-          getCat();
+          getBird();
         } catch (e) {
           console.log(e.message());
         }
@@ -153,27 +155,27 @@ close.addEventListener('click', (evt) => {
 
 // AJAX call
 
-const getCat = async () => {
-  console.log('getCat token ', sessionStorage.getItem('token'));
+const getBird = async () => {
+  console.log('getBird token ', sessionStorage.getItem('token'));
   try {
     const options = {
       headers: {
         Authorization: 'Bearer ' + sessionStorage.getItem('token'),
       },
     };
-    const response = await fetch(url + '/cat', options); 
-    const cats = await response.json();
-    createCatCards(cats);
+    const response = await fetch(url + '/bird', options); 
+    const birds = await response.json();
+    createBirdCards(birds);
   } catch (e) {
     console.log(e.message);
   }
 };
 
-const getCats = async () => {
+const getBirds = async () => {
   try {
-    const response = await fetch(url + '/cat');
-    const cats = await response.json();
-    createCatCards(cats);
+    const response = await fetch(url + '/bird');
+    const birds = await response.json();
+    createBirdCards(birds);
   } catch (e) {
     console.log(e.message);
   }
@@ -209,7 +211,7 @@ const getUsers = async () => {
   }
 };
 
-// submit add cat form
+// submit add bird form
 addForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const fd = new FormData(addForm);
@@ -220,7 +222,7 @@ addForm.addEventListener('submit', async (evt) => {
     },
     body: fd,
   };
-  const response = await fetch(url + '/cat', fetchOptions);
+  const response = await fetch(url + '/bird', fetchOptions);
   const json = await response.json();
   console.log('add response', json);
   getCat();
@@ -243,7 +245,7 @@ modForm.addEventListener('submit', async (evt) => {
   const response = await fetch(modForm.action, fetchOptions);
   const json = await response.json();
   console.log('modify response', json);
-  getCat();
+  getBird();
 });
 
 // login
@@ -286,7 +288,7 @@ logOut.addEventListener('click', async (evt) => {
     // remove token
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
-    alert('You have logged out');
+    alert('Olet kirjautunut ulos');
     startApp(false);
     location.reload(); //ladataan sivu uudestaan
   } catch (e) {

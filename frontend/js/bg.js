@@ -1,5 +1,6 @@
-function myFunction() {
-  var x = document.getElementById("myTopnav");
+//Navivalikko aukee kun hampurilaista painaa
+let myFunction = () => {
+  const x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
     x.className += " responsive";
   } else {
@@ -8,7 +9,7 @@ function myFunction() {
 }
 //Avaa kirjautumismodaalin
 let kirjaudu = () => {
-  var x = document.getElementById("login-wrapper");
+  const x = document.getElementById("login-wrapper");
   if (x.style.display === "none") {
     x.style.display = "flex";
   } else {
@@ -29,9 +30,9 @@ let rekisteroi = () => {
 document.getElementById("rekisteroidy").addEventListener("click", rekisteroi);
 
 // Get the modal
-var modal = document.getElementById("register-wrapper");
-var modallog = document.getElementById("login-wrapper");
-var modaladd = document.getElementById("id01");
+const modal = document.getElementById("register-wrapper");
+const modallog = document.getElementById("login-wrapper");
+const modaladd = document.getElementById("id01");
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modallog) {
