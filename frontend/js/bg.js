@@ -32,7 +32,7 @@ document.getElementById("rekisteroidy").addEventListener("click", rekisteroi);
 // Get the modal
 const modal = document.getElementById("register-wrapper");
 const modallog = document.getElementById("login-wrapper");
-const modaladd = document.getElementById("id01");
+const modaladd = document.getElementById("add-bird-wrapper");
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modallog) {
@@ -72,10 +72,10 @@ request.onreadystatechange = function (response) {
       });
 
       // Update the placeholder text.
-      input.placeholder = "e.g. datalist";
+      input.placeholder = "Valitse laji";
     } else {
       // An error occured :(
-      input.placeholder = "Couldn't load datalist options :(";
+      input.placeholder = "Lajiasi ei löydy tietokannasta. Ota yhtyes ylläpitoon :)";
     }
   }
 };

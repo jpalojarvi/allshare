@@ -33,25 +33,22 @@
           </form>
         </div>
         <div id="navbar-public">
-        <a id="rekisteroidy">Rekisteröidy</a>
-        <a id="kirjaudu">Kirjaudu</a>
-        <a href="index.html" class="active">Etusivu</a>
+          <a id="rekisteroidy">Rekisteröidy</a>
+          <a id="kirjaudu">Kirjaudu</a>
+          <a href="index.html" class="active">Etusivu</a>
         </div>
-        <div id="navbar-user" style="display: none;">
+        <div id="navbar-user" style="display: none">
           <a id="log-out">Poistu</a>
           <a onclick="omatTiedotFunktio()">Omat tiedot</a>
           <a href="index.html" class="active">Etusivu</a>
-          </div>
+        </div>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
           <i class="fa fa-bars"></i>
         </a>
       </nav>
       <!-- Login modaali-->
       <div id="login-wrapper" class="modal">
-        <form
-          class="modal-content animate"
-          id="login-form"
-        >
+        <form class="modal-content animate" id="login-form">
           <div class="imgcontainer">
             <span
               onclick="document.getElementById('login-wrapper').style.display='none'"
@@ -97,10 +94,7 @@
       <!-- Register modaali uusi -->
 
       <div id="register-wrapper" class="modal">
-        <form
-          class="modal-content animate"
-          id="add-user-form"
-        >
+        <form class="modal-content animate" id="add-user-form">
           <div class="imgcontainer">
             <span
               onclick="document.getElementById('register-wrapper').style.display='none'"
@@ -110,7 +104,7 @@
             >
             <h2>Rekisteröinti</h2>
           </div>
-  
+
           <div class="container">
             <label for="name"><b>Käyttäjätunnus</b></label>
             <input
@@ -135,7 +129,7 @@
             />
             <button type="submit">Rekisteröi</button>
           </div>
-  
+
           <div
             class="container"
             id="modalfooter"
@@ -154,44 +148,46 @@
 
       <!-- Lisää lintu modal-->
 
-      <div id="id01" class="modal">
+      <div id="add-bird-wrapper" class="modal">
         <form
           class="modal-content animate"
-          action="/action_page.php"
-          method="post"
+          id="add-bird-form"
+          enctype="multipart/form-data"
         >
           <div class="imgcontainer">
             <span
-              onclick="document.getElementById('id01').style.display='none'"
+              onclick="document.getElementById('add-bird-wrapper').style.display='none'"
               class="close"
               title="Close Modal"
               >&times;</span
             >
             <h2>Lisää lintu</h2>
           </div>
-  
+
           <div class="container">
             <label for="uname"><b>Lajin nimi</b></label>
-            <label for="ajax">Pick an HTML Element (options loaded using AJAX)</label>
-            <input type="text" id="ajax" list="json-datalist" placeholder="e.g. datalist">
+            <label for="ajax"></label>
+            <input
+              type="text"
+              id="ajax"
+              list="json-datalist"
+              placeholder="Lajilista"
+            />
             <datalist id="json-datalist"></datalist>
-  
-  
-            
-            <textarea type="lintukuvaus" name="lintukuvaus" rows="4" cols="50" placeholder="Kirjoita kuvaus linnustasi">
-              </textarea>
-              <br><br>
-            </form>
-  
-            <form>
-              <label for="myfile">Valitse tiedosto:</label>
-              <br />
-              <input type="file" id="myfile" name="myfile" />
-            </form>
-  
+            <textarea
+              id="lintukuvaus"
+              name="lintukuvaus"
+              rows="4"
+              cols="50"
+              placeholder="Kirjoita halutessasi kuvaus linnusta"
+            ></textarea>
+
+            <label for="myfile">Valitse tiedosto:</label>
+            <input type="file" id="myfile" name="myfile" />
+
             <button type="submit">Lisää lintu</button>
           </div>
-  
+
           <div
             class="container"
             id="modalfooter"
@@ -199,7 +195,7 @@
           >
             <button
               type="button"
-              onclick="document.getElementById('id01').style.display='none'"
+              onclick="document.getElementById('add-bird-wrapper').style.display='none'"
               class="cancelbtn"
             >
               Peruuta
@@ -228,20 +224,23 @@
         </section>
 
         <section id="valokuvat">
-          <h1 id="uusimmat">Uusimmat kuvat</h1>
-          
-          <button id="linnun-lisays"
-      onclick="document.getElementById('id01').style.display='block'"
-      style="width: auto"
-    >
-      Lisää lintu
-    </button>
+          <div id="user-contentbar">
+            <h2 id="uusimmat">Uusimmat kuvat</h2>
+            <!--<h2 id="omatkuvat">Omat kuvat</h2>-->
+            <button
+              id="linnun-lisays"
+              onclick="document.getElementById('add-bird-wrapper').style.display='block'"
+              style="width: auto"
+            >
+              Lisää lintu
+            </button>
+          </div>
           <ul>
             <!-- js creates list here -->
           </ul>
         </section>
         <hr />
-        <div class="forms" id="add-cat" style="display: none;">
+        <div class="forms" id="add-cat" style="display: none">
           <div class="form-wrapper">
             <h3>Add cat</h3>
             <form
