@@ -22,7 +22,8 @@ const getAllBirds = async (next) => {
     next(httpError("Database error", 500));
   }
 };
-
+//select * from taulu where kenttä like ?;
+//[`%${hakusana}%`]
 const getBirdsByKeyword = async (next) => {
   try {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
@@ -74,10 +75,9 @@ const addBird = async (
 ) => {
   try {
     const [rows] = await promisePool.execute(
-      "INSERT INTO tiedosto (Tiedostonimi, Luomispaikka, Kuvaus, Kayttajanumero) VALUES (?, ?, ?, ?, ?)",
-      [Tiedostonimi, Luomispaikka, Kuvaus, Kayttajanumero],
-      "INSERT INTO relationship (Lajinumero, Tiedostonumero)VALUES (?, LAST_INSERT_ID()",
-      [Lajinumero]
+      "INSERT INTO tiedosto (Tiedostonimi, Luomispaikka, Kuvaus, Kayttajanumero) VALUES (?, ?, ?, ?, ?);INSERT INTO relationship (Lajinumero, Tiedostonumero)VALUES (?, LAST_INSERT_ID();",
+      [Tiedostonimi, Luomispaikka, Kuvaus, Kayttajanumero, Lajinumero],
+     
     );
     return rows;
   } catch (e) {
