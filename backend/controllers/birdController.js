@@ -71,34 +71,33 @@ const bird_post = async (req, res, next) => {
   }
 
   try {
-    const coords = await getCoordinates(req.file.path);
-    req.body.coords = coords;
+    const Luomispaikka = await getCoordinates(req.file.path);
+    req.body.Luomispaikka = Luomispaikka;
   } catch (e) {
-    req.body.coords = [24.74, 60.24];
+    req.body.Luomispaikka = [24.74, 60.24];
   }
 
   try {
     const thumb = await makeThumbnail(
       req.file.path,
-      "./thumbnails/" + req.file.filename
+      "./thumbnails/" + req.file.Tiedostonimi
     );
 
-    const { name, birthdate, weight, coords } = req.body;
+    const { Kuvaus, Lajinumero, Luomispaikka } = req.body;
 
     const tulos = await addBird(
-      name,
-      weight,
-      req.user.user_id,
-      birthdate,
-      req.file.filename,
-      JSON.stringify(coords),
+      Kuvaus,
+      Lajinumero,
+      req.user.Kayttajanumero,
+      req.file.Tiedostonimi,
+      JSON.stringify(Luomispaikka),
       next
     );
     if (thumb) {
       if (tulos.affectedRows > 0) {
         res.json({
           message: "bird added",
-          bird_id: tulos.insertId,
+          Tiedostonumero: tulos.insertId,
         });
       } else {
         next(httpError("No bird inserted", 400));
@@ -120,27 +119,26 @@ const bird_put = async (req, res, next) => {
   }
   // pvm VVVV-KK-PP esim 2010-05-28
   try {
-    const { name, birthdate, weight } = req.body;
+    const { Kuvaus } = req.body;
     /*let owner = req.user.user_id;
     if (req.user.role === 0) {
       owner = req.body.owner;
     }*/
 
-    const owner = req.user.role === 0 ? req.body.owner : req.user.user_id;
+    const omistaja = req.user.Roolinumero === 0 ? req.body.owner : req.user.Kayttajanumero;
 
     const tulos = await modifyBird(
-      name,
-      weight,
-      owner,
-      birthdate,
-      req.params.id,
-      req.user.role,
+      Tiedostonimi,
+      Kuvaus,
+      omistaja,
+      req.params.Tiedostonumero,
+      req.user.Roolinumero,
       next
     );
     if (tulos.affectedRows > 0) {
       res.json({
         message: "bird modified",
-        bird_id: tulos.insertId,
+        Tiedostonumero: tulos.insertId,
       });
     } else {
       next(httpError("No bird modified", 400));
@@ -154,15 +152,15 @@ const bird_put = async (req, res, next) => {
 const bird_delete = async (req, res, next) => {
   try {
     const vastaus = await deleteBird(
-      req.params.id,
-      req.user.user_id,
-      req.user.role,
+      req.params.Tiedostonumero,
+      req.user.Kayttajanumero,
+      req.user.Roolinumero,
       next
     );
     if (vastaus.affectedRows > 0) {
       res.json({
         message: "bird deleted",
-        bird_id: vastaus.insertId,
+        Tiedostonumero: vastaus.insertId,
       });
     } else {
       next(httpError("No bird found", 404));

@@ -7,15 +7,8 @@ const getAllBirds = async (next) => {
   try {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
     const [rows] = await promisePool.execute(`
-	SELECT 
-	Tiedostonumero, 
-	Tiedostonimi, 
-	Luomispaikka, 
-	Kuvaus, 
-	Kayttajanumero,
-	FROM Tiedosto
-	JOIN Laji ON 
-	wop_bird.owner = wop_user.user_id`);
+    SELECT * FROM tiedosto;`
+  );
     return rows;
   } catch (e) {
     console.error("getAllBirds error", e.message);
@@ -43,19 +36,11 @@ const getBird = async (id, next) => {
   try {
     const [rows] = await promisePool.execute(
       `
-	  SELECT 
-	  bird_id, 
-	  wop_bird.name, 
-	  weight, 
-	  owner, 
-	  filename,
-	  birthdate, 
-	  coords,
-	  wop_user.name as ownername 
-	  FROM wop_bird 
-	  JOIN wop_user ON 
-	  wop_bird.owner = wop_user.user_id
-	  WHERE bird_id = ?`,
+	  SELECT *
+	  FROM tiedosto
+	  JOIN relationship ON 
+	  tiedosto.Tiedostonumero = relationship.Tiedostonumero
+	  WHERE Lajinumero = ?`,
       [id]
     );
     return rows;
@@ -113,11 +98,11 @@ const modifyBird = async (
   }
 };
 
-const deleteBird = async (id, owner_id, role, next) => {
-  let sql = "DELETE FROM wop_bird WHERE bird_id = ? AND owner = ?";
-  let params = [id, owner_id];
-  if (role === 0) {
-    sql = "DELETE FROM wop_bird WHERE bird_id = ?";
+const deleteBird = async (Tiedostonumero, Kayttajanumero, Roolinumero, next) => {
+  let sql = "DELETE FROM tiedosto WHERE Tiedostonumero = ? AND Kayttajanumero = ?";
+  let params = [Tiedostonumero, Kayttajanumero];
+  if (Roolinumero === 0) {
+    sql = "DELETE FROM tiedosto WHERE Tiedostonumero = ?";
     params = [id];
   }
   try {
