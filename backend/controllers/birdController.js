@@ -33,10 +33,10 @@ const bird_list_by_keyword_get = async (req, res, next) => {
     if (birds.length > 0) {
       res.json(birds);
     } else {
-      next("No birds found", 404);
+      next("No keywords found", 404);
     }
   } catch (e) {
-    console.log("bird_list_get error", e.message);
+    console.log("bird_list_by_keyword_get error", e.message);
     next(httpError("internal server error", 500));
   }
 };
@@ -71,33 +71,33 @@ const bird_post = async (req, res, next) => {
   }
 
   try {
-    const Luomispaikka = await getCoordinates(req.file.path);
-    req.body.Luomispaikka = Luomispaikka;
+    const luomispaikka = await getCoordinates(req.file.path);
+    req.body.luomispaikka = luomispaikka;
   } catch (e) {
-    req.body.Luomispaikka = [24.74, 60.24];
+    req.body.luomispaikka = [24.74, 60.24];
   }
 
   try {
     const thumb = await makeThumbnail(
       req.file.path,
-      "./thumbnails/" + req.file.Tiedostonimi
+      "./thumbnails/" + req.file.tiedostonimi
     );
 
-    const { Kuvaus, Lajinumero, Luomispaikka } = req.body;
+    const { kuvaus, luomispaikka, lajinumero } = req.body;
 
     const tulos = await addBird(
-      Kuvaus,
-      Lajinumero,
-      req.user.Kayttajanumero,
-      req.file.Tiedostonimi,
-      JSON.stringify(Luomispaikka),
+      kuvaus,
+      lajinumero,
+      req.user.kayttajanumero,
+      req.file.tiedostonimi,
+      JSON.stringify(luomispaikka),
       next
     );
     if (thumb) {
       if (tulos.affectedRows > 0) {
         res.json({
           message: "bird added",
-          Tiedostonumero: tulos.insertId,
+          tiedostonumero: tulos.insertId,
         });
       } else {
         next(httpError("No bird inserted", 400));
@@ -119,26 +119,26 @@ const bird_put = async (req, res, next) => {
   }
   // pvm VVVV-KK-PP esim 2010-05-28
   try {
-    const { Kuvaus } = req.body;
+    const { kuvaus } = req.body;
     /*let owner = req.user.user_id;
     if (req.user.role === 0) {
       owner = req.body.owner;
     }*/
 
-    const omistaja = req.user.Roolinumero === 0 ? req.body.owner : req.user.Kayttajanumero;
+    const omistaja = req.user.roolinumero === 0 ? req.body.owner : req.user.kayttajanumero;
 
     const tulos = await modifyBird(
-      Tiedostonimi,
-      Kuvaus,
+      tiedostonimi,
+      kuvaus,
       omistaja,
-      req.params.Tiedostonumero,
-      req.user.Roolinumero,
+      req.params.tiedostonumero,
+      req.user.roolinumero,
       next
     );
     if (tulos.affectedRows > 0) {
       res.json({
         message: "bird modified",
-        Tiedostonumero: tulos.insertId,
+        tiedostonumero: tulos.insertId,
       });
     } else {
       next(httpError("No bird modified", 400));
@@ -150,24 +150,25 @@ const bird_put = async (req, res, next) => {
 };
 
 const bird_delete = async (req, res, next) => {
+  console.log(req.user);
   try {
     const vastaus = await deleteBird(
-      req.params.Tiedostonumero,
-      req.user.Kayttajanumero,
-      req.user.Roolinumero,
+      req.params.id,
+      req.user.kayttajanumero,
+      req.user.roolinumero,
       next
     );
     if (vastaus.affectedRows > 0) {
       res.json({
         message: "bird deleted",
-        Tiedostonumero: vastaus.insertId,
+        tiedostonumero: vastaus.insertId,
       });
     } else {
       next(httpError("No bird found", 404));
     }
   } catch (e) {
     console.log("bird_delete error", e.message);
-    next(httpError("internal server error", 500));
+    next(httpError("horrible server error", 500));
   }
 };
 

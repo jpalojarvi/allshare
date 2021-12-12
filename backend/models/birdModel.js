@@ -7,7 +7,7 @@ const getAllBirds = async (next) => {
   try {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
     const [rows] = await promisePool.execute(`
-    SELECT * FROM tiedosto;`
+    SELECT * FROM tiedosto JOIN laji ON tiedosto.lajinumero = laji.lajinumero JOIN kayttaja ON tiedosto.kayttajanumero = kayttaja.kayttajanumero;`
   );
     return rows;
   } catch (e) {
@@ -22,8 +22,8 @@ const getBirdsByKeyword = async (next) => {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
     const [rows] = await promisePool.execute(`
 	SELECT 
-  Lajinumero,
-	Suominimi, 
+  lajinumero,
+	suominimi, 
 	FROM laji`);
     return rows;
   } catch (e) {
@@ -38,9 +38,9 @@ const getBird = async (id, next) => {
       `
 	  SELECT *
 	  FROM tiedosto
-	  JOIN relationship ON 
-	  tiedosto.Tiedostonumero = relationship.Tiedostonumero
-	  WHERE Lajinumero = ?`,
+	  JOIN laji ON
+	  tiedosto.lajinumero = laji.lajinumero
+	  WHERE tiedosto.lajinumero = ?`,
       [id]
     );
     return rows;
@@ -51,17 +51,18 @@ const getBird = async (id, next) => {
 };
 
 const addBird = async (
-  Tiedostonimi,
-  Luomispaikka,
-  Kuvaus,
-  Kayttajanumero,
-  Lajinumero,
+  tiedostonimi,
+  luomispaikka,
+  kuvaus,
+  kayttajanumero,
+  lajinumero,
   next
 ) => {
   try {
     const [rows] = await promisePool.execute(
-      "INSERT INTO tiedosto (Tiedostonimi, Luomispaikka, Kuvaus, Kayttajanumero) VALUES (?, ?, ?, ?, ?);INSERT INTO relationship (Lajinumero, Tiedostonumero)VALUES (?, LAST_INSERT_ID();",
-      [Tiedostonimi, Luomispaikka, Kuvaus, Kayttajanumero, Lajinumero],
+      //"INSERT INTO tiedosto (tiedostonimi, luomispaikka, kuvaus, kayttajanumero) VALUES (?, ?, ?, ?, ?);INSERT INTO relationship (lajinumero, tiedostonumero)VALUES (?, LAST_INSERT_ID();",
+      "INSERT INTO tiedosto (tiedostonimi, luomispaikka, kuvaus, kayttajanumero, lajinumero) VALUES (?, ?, ?, ?, ?);",
+      [tiedostonimi, luomispaikka, kuvaus, kayttajanumero, lajinumero],
      
     );
     return rows;
@@ -98,18 +99,18 @@ const modifyBird = async (
   }
 };
 
-const deleteBird = async (Tiedostonumero, Kayttajanumero, Roolinumero, next) => {
-  let sql = "DELETE FROM tiedosto WHERE Tiedostonumero = ? AND Kayttajanumero = ?";
-  let params = [Tiedostonumero, Kayttajanumero];
-  if (Roolinumero === 0) {
-    sql = "DELETE FROM tiedosto WHERE Tiedostonumero = ?";
+const deleteBird = async (id, kayttajanumero, roolinumero, next) => {
+  let sql = "DELETE FROM tiedosto WHERE tiedostonumero = ? AND kayttajanumero = ?;";
+  let params = [id, kayttajanumero];
+  if (roolinumero === 0) {
+    sql = "DELETE FROM tiedosto WHERE tiedostonumero = ?;";
     params = [id];
   }
   try {
     const [rows] = await promisePool.execute(sql, params);
     return rows;
   } catch (e) {
-    console.error("getBird error", e.message);
+    console.error("deleteBird error", e.message);
     next(httpError("Database error", 500));
   }
 };

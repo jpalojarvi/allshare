@@ -35,69 +35,62 @@ const startApp = (logged) => {
   //logOut.style.display = logged ? 'flex' : 'none';
   otsikko.style.display = logged ? 'none' : 'block';
   linnunlisays.style.display = logged ? 'block' : 'none';
-  userInfo.innerHTML = logged ? `<span id="nimi">Hei</span> ${user.Kayttajanimi}` : '';
+  userInfo.innerHTML = logged ? `<span id="nimi">Hei</span> ${user.kayttajanimi}` : '';
   userInfo.style.display = logged? 'block' : 'none';
   
   if (logged) {
-    if (user?.Roolinumero > 0) {
+    if (user?.roolinumero > 0) {
       
       userList.remove();
     }
-    getBird();
+    getUserBird();
     getUsers();
-  }else {
-    getBirds();
+  }else{
+    getPublicBirds();
   }
 };
 
 // create bird cards
 const createBirdCards = (birds) => {
-  console.log('birds from getBird or getBirds ', birds);
+ 
   // clear ul
   ul.innerHTML = '';
   birds.forEach((bird) => {
     // create li with DOM methods
-    console.log('one bird', bird);
     const img = document.createElement('img');
-    img.src = bird.Tiedostonimi;
+    img.src = bird.tiedostonimi;
     img.alt = "kuva linnusta";
     img.classList.add('resp');
 
     // open large image when clicking image
     /*
     img.addEventListener('click', () => {
-      modalImage.src = url + '/' + bird.filename;
-      imageModal.alt = bird.name;
+      modalImage.src = url + '/' + bird.tiedostonimi;
+      imageModal.alt = bird.suominimi;
       imageModal.classList.toggle('hide');
       try {
         const coords = JSON.parse(bird.coords);
-        // console.log(coords);
-        addMarker(coords);
+        // console.log(luomispaikka);
+        addMarker(luomispaikka);
       } catch (e) {}
     }); */
 
     const figure = document.createElement('figure').appendChild(img);
 
-    const h2 = document.createElement('h2');
-    h2.innerHTML = bird.Suominimi;
+    const h2 = document.createElement('h3');
+    h2.innerHTML = bird.suominimi;
 
     const p1 = document.createElement('p');
-    p1.innerHTML = `Lisäysaika: ${dt
-      .fromISO(bird.Lisaysaika)
+    p1.innerHTML = `Lisätty: ${dt
+      .fromISO(bird.lisaysaika)
       .setLocale('fi')
       .toLocaleString()}`;
-    /*
-    const p1b = document.createElement('p');
-    p1b.innerHTML = `Age: ${dt
-      .now()
-      .diff(dt.fromISO(bird.Lisaysaika), ['year'])
-      .toFormat('y')}`;*/
 
     const p2 = document.createElement('p');
-    p2.innerHTML = `Kuvaus: ${bird.Kuvaus}`;
+    p2.innerHTML = `Kuvaus: ${bird.kuvaus}`;
 
     const p3 = document.createElement('p');
-    p3.innerHTML = `@: ${bird.Kayttajanimi}`;
+    p3.innerHTML = `@: ${bird.kayttajanimi}`;
 
     const li = document.createElement('li');
     li.classList.add('light-border');
@@ -105,27 +98,28 @@ const createBirdCards = (birds) => {
     li.appendChild(figure);
     li.appendChild(h2);
     li.appendChild(p1);
-    //li.appendChild(p1b);
+
     li.appendChild(p2);
     li.appendChild(p3);
     ul.appendChild(li);
-    if (user.Roolinumero === 0 || user.Kayttajanumero === bird.Kayttajanumero|| user.role === 1) {    
+    if (user.roolinumero === 0 || user.kayttajanumero === bird.kayttajanumero) {    
       // add modify button
-      /*
+
       const modButton = document.createElement('button');
-      modButton.innerHTML = 'Modify';
+      modButton.innerHTML = 'Muokkaa';
       modButton.addEventListener('click', () => {
         const inputs = modForm.querySelectorAll('input');
         inputs[0].value = bird.name;
         inputs[1].value = bird.birthdate;
         inputs[2].value = bird.weight;
-        modForm.action = `${url}/cat/${bird.bird_id}`;
-        if (user.role === 0) modForm.querySelector('select').value = bird.owner;
-      }); */
+        modForm.action = `${url}/bird/${bird.tiedostonumero}`;
+        if (user.roolinumero=== 0) modForm.querySelector('select').value = bird.kayttajanumero;
+      }); 
 
       // delete selected cat
       const delButton = document.createElement('button');
       delButton.innerHTML = 'Poista';
+      console.log('käyttäjänumero', user.kayttajanumero, 'roolinumero', user.roolinumero);
       delButton.addEventListener('click', async () => {
         const fetchOptions = {
           method: 'DELETE',
@@ -135,12 +129,12 @@ const createBirdCards = (birds) => {
         };
         try {
           const response = await fetch(
-            url + '/bird/' + bird.Tiedostonumero,
+            url + '/bird/' + bird.tiedostonumero,
             fetchOptions
           );
           const json = await response.json();
           console.log('delete response', json);
-          getBird();
+          getUserBird();
         } catch (e) {
           console.log(e.message());
         }
@@ -159,7 +153,7 @@ close.addEventListener('click', (evt) => {
 
 // AJAX call
 
-const getBird = async () => {
+const getUserBird = async () => {
   console.log('getBird token ', sessionStorage.getItem('token'));
   try {
     const options = {
@@ -169,13 +163,14 @@ const getBird = async () => {
     };
     const response = await fetch(url + '/bird', options); 
     const birds = await response.json();
+    console.log('käyttäjän hakemat linnut', birds);
     createBirdCards(birds);
   } catch (e) {
     console.log(e.message);
   }
 };
 
-const getBirds = async () => {
+const getPublicBirds = async () => {
   try {
     const response = await fetch(url + '/bird');
     const birds = await response.json();
@@ -192,8 +187,8 @@ const createUserOptions = (users) => {
   users.forEach((user) => {
     // create options with DOM methods
     const option = document.createElement('option');
-    option.value = user.Kayttajanumero;
-    option.innerHTML = user.Kayttajanimi;
+    option.value = user.kayttajanumero;
+    option.innerHTML = user.kayttajanimi;
     option.classList.add('light-border');
     userList.appendChild(option);
   });
@@ -226,10 +221,11 @@ addForm.addEventListener('submit', async (evt) => {
     },
     body: fd,
   };
+  console.log('jotain??', fetchOptions);
   const response = await fetch(url + '/bird', fetchOptions);
   const json = await response.json();
   console.log('add response', json);
-  getCat();
+  getUserBird();
 });
 
 // submit modify form

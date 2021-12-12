@@ -151,7 +151,7 @@
       <div id="add-bird-wrapper" class="modal">
         <form
           class="modal-content animate"
-          id="add-bird-form"
+          id="add-bird-form-modal"
           enctype="multipart/form-data"
         >
           <div class="imgcontainer">
@@ -175,15 +175,15 @@
             />
             <datalist id="json-datalist"></datalist>
             <textarea
-              id="lintukuvaus"
-              name="lintukuvaus"
+              id="kuvaus"
+              name="kuvaus"
               rows="4"
               cols="50"
               placeholder="Kirjoita halutessasi kuvaus linnusta"
             ></textarea>
 
             <label for="myfile">Valitse tiedosto:</label>
-            <input type="file" id="myfile" name="myfile" />
+            <input type="file" id="myfile" name="tiedostonimi" />
 
             <button type="submit">Lisää lintu</button>
           </div>
@@ -240,6 +240,8 @@
           </ul>
         </section>
         <hr />
+
+        <!--vanha lisää lintu-->
         <div class="forms" id="add-bird" style="display: block">
           <div class="form-wrapper">
             <h3>Lisää lintu</h3>
@@ -251,19 +253,19 @@
               <input
                 class="light-border"
                 type="text"
-                name="Kuvaus"
+                name="kuvaus"
                 placeholder="Kirjoita kuvaus"
               />
               <input
                 class="light-border"
                 type="number"
-                name="Lajinumero"
-                placeholder="1"
+                name="lajinumero"
+                value="1"
               />
               <input
                 class="light-border"
                 type="file"
-                name="Tiedostonimi"
+                name="tiedostonimi"
                 accept="image/*"
                 placeholder="Choose file"
               />

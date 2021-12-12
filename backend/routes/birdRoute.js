@@ -23,9 +23,9 @@ const router = express.Router();
 router.route("/").get(bird_list_get).post(
   //passport.authenticate("jwt", { session: false }),
   upload.single("bird"),
-  body("Tiedostonimi").notEmpty().escape(),
-  body("Kuvaus"),
-  body("Kayttajanumero").isNumeric(),
+  body("tiedostonimi").notEmpty().escape(),
+  body("kayttajanumero").isNumeric(),
+  body("lajinumero").isNumeric(),
   bird_post
 );
 
@@ -34,9 +34,9 @@ router
   .get(bird_get)
   .delete(bird_delete)
   .put(
-    body("Tiedostonimi").notEmpty().escape(),
-    body("Kuvaus"),
-    body("Kayttajanumero").isNumeric(),
+    body("tiedostonimi").notEmpty().escape(),
+    body("kayttajanumero").isNumeric(),
+    body("lajinumero").isNumeric(),
     bird_put
   );
 

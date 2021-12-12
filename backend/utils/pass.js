@@ -17,7 +17,7 @@ passport.use(
       if (!user) {
         return done(null, false);
       }
-      if (!bcrypt.compareSync(password, user.Salasana)) {
+      if (!bcrypt.compareSync(password, user.salasana)) {
         return done(null, false);
       }
       return done(null, { ...user }, { message: "Logged In Successfully" }); // use spread syntax to create shallow copy to get rid of binary row type
