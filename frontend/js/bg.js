@@ -29,12 +29,34 @@ let rekisteroi = () => {
 };
 document.getElementById("rekisteroidy").addEventListener("click", rekisteroi);
 
+//Avaa omat tiedot modaalin
+let omatTiedot = () => {
+  const x = document.getElementById("user-wrapper");
+  if (x.style.display === "none") {
+    x.style.display = "flex";
+  } else {
+    x.style.display = "none";
+  }
+};
+document.getElementById("naytaOmatTiedot").addEventListener("click", omatTiedot);
+
+//Avaa muokkaa lintu modaalin
+let muokkaaKuvaus = () => {
+  const x = document.getElementById("edit-bird-wrapper");
+  if (x.style.display === "none") {
+    x.style.display = "flex";
+  } else {
+    x.style.display = "none";
+  }
+};
+document.getElementById("muokkaaLintua").addEventListener("click", muokkaaKuvaus);
+
 // Get the modal
 const modal = document.getElementById("register-wrapper");
 const modallog = document.getElementById("login-wrapper");
 const modaladd = document.getElementById("add-bird-wrapper");
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
+window.onclick = (event) => {
   if (event.target == modallog) {
     modallog.style.display = "none";
   }
@@ -55,7 +77,7 @@ var input = document.getElementById("ajax");
 var request = new XMLHttpRequest();
 
 // Handle state changes for the request.
-request.onreadystatechange = function (response) {
+request.onreadystatechange = (response) => {
   if (request.readyState === 4) {
     if (request.status === 200) {
       // Parse the JSON

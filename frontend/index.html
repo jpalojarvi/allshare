@@ -39,7 +39,7 @@
         </div>
         <div id="navbar-user" style="display: none">
           <a id="log-out">Poistu</a>
-          <a onclick="omatTiedotFunktio()">Omat tiedot</a>
+          <a id="naytaOmatTiedot">Omat tiedot</a>
           <a href="index.html" class="active">Etusivu</a>
         </div>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -146,6 +146,52 @@
         </form>
       </div>
 
+      <!-- User modaali-->
+      <div id="user-wrapper" class="modal">
+        <form class="modal-content animate" id="user-form">
+          <div class="imgcontainer">
+            <span
+              onclick="document.getElementById('user-wrapper').style.display='none'"
+              class="close"
+              title="Close Modal"
+              >&times;</span
+            >
+            <h2>Omat tiedot</h2>
+          </div>
+          <div class="container">
+            <label for="username"><b>Käyttäjätunnus</b></label>
+            <input
+              type="text"
+              placeholder="Käyttäjänimi tähän userista"
+              name="username"
+              disabled
+            />
+            <label for="passwd"><b>Sähköpostiosoite</b></label>
+            <input
+              type="text"
+              placeholder="Sähköpostiosoite tähän userista"
+              name="email"
+              disabled
+            />
+            
+          </div>
+          <div
+            class="container"
+            id="modalfooter"
+            style="background-color: #f2f2f2"
+          >
+            <button
+              type="button"
+              onclick="document.getElementById('user-wrapper').style.display='none'"
+              class="cancelbtn"
+            >
+              Peruuta
+            </button>
+            
+          </div>
+        </form>
+      </div>
+
       <!-- Lisää lintu modal-->
 
       <div id="add-bird-wrapper" class="modal">
@@ -196,6 +242,62 @@
             <button
               type="button"
               onclick="document.getElementById('add-bird-wrapper').style.display='none'"
+              class="cancelbtn"
+            >
+              Peruuta
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Muokkaa lintu modal-->
+
+      <div id="edit-bird-wrapper" class="modal">
+        <form
+          class="modal-content animate"
+          id="edit-bird-form"
+          enctype="multipart/form-data"
+        >
+          <div class="imgcontainer">
+            <span
+              onclick="document.getElementById('edit-bird-wrapper').style.display='none'"
+              class="close"
+              title="Close Modal"
+              >&times;</span
+            >
+            <h2>Muokkaa kuvausta</h2>
+          </div>
+
+          <div class="container">
+            <label for="uname"><b>Lajin nimi</b></label>
+            <label for="ajax"></label>
+            <input
+              type="text"
+              id="ajax"
+              list="json-datalist"
+              placeholder="Tähän lajin suominimi"
+              disabled
+            />
+            <datalist id="json-datalist"></datalist>
+            <textarea
+              id="kuvaus"
+              name="kuvaus"
+              rows="4"
+              cols="50"
+              placeholder="Tähän tulee teksti jonka voi muokata"
+            ></textarea>
+
+            <button type="submit">Tallenna muutos</button>
+          </div>
+
+          <div
+            class="container"
+            id="modalfooter"
+            style="background-color: #f1f1f1"
+          >
+            <button
+              type="button"
+              onclick="document.getElementById('edit-bird-wrapper').style.display='none'"
               class="cancelbtn"
             >
               Peruuta

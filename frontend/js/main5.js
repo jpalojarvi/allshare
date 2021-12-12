@@ -81,25 +81,25 @@ const createBirdCards = (birds) => {
     h2.innerHTML = bird.suominimi;
 
     const p1 = document.createElement('p');
-    p1.innerHTML = `Lisätty: ${dt
+    p1.innerHTML = `Lisätty: <spam id="nimi">${dt
       .fromISO(bird.lisaysaika)
       .setLocale('fi')
-      .toLocaleString()}`;
+      .toLocaleString()}</spam>`;
 
     const p2 = document.createElement('p');
-    p2.innerHTML = `Kuvaus: ${bird.kuvaus}`;
+    p2.innerHTML = `<spam id="nimi">Kuvaus:</spam> ${bird.kuvaus}`;
 
     const p3 = document.createElement('p');
-    p3.innerHTML = `@: ${bird.kayttajanimi}`;
+    p3.innerHTML = `<spam id="nimi">@:</spam> ${bird.kayttajanimi}`;
 
     const li = document.createElement('li');
-    li.classList.add('light-border');
+    li.classList.add('lintutaulu');
 
     li.appendChild(figure);
     li.appendChild(h2);
-    li.appendChild(p1);
-
     li.appendChild(p2);
+
+    li.appendChild(p1);
     li.appendChild(p3);
     ul.appendChild(li);
     if (user.roolinumero === 0 || user.kayttajanumero === bird.kayttajanumero) {    
@@ -108,12 +108,12 @@ const createBirdCards = (birds) => {
       const modButton = document.createElement('button');
       modButton.innerHTML = 'Muokkaa';
       modButton.addEventListener('click', () => {
-        const inputs = modForm.querySelectorAll('input');
-        inputs[0].value = bird.name;
-        inputs[1].value = bird.birthdate;
-        inputs[2].value = bird.weight;
+        muokkaaKuvaus();
+        /*const inputs = modForm.querySelectorAll('input');
+        inputs[0].value = bird.suominimi;
+        inputs[1].value = bird.kuvaus;
         modForm.action = `${url}/bird/${bird.tiedostonumero}`;
-        if (user.roolinumero=== 0) modForm.querySelector('select').value = bird.kayttajanumero;
+        if (user.roolinumero=== 0) modForm.querySelector('select').value = bird.kayttajanumero;*/
       }); 
 
       // delete selected cat
