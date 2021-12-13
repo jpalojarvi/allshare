@@ -80,7 +80,7 @@ const bird_post = async (req, res, next) => {
   try {
     const thumb = await makeThumbnail(
       req.file.path,
-      "./thumbnails/" + req.file.tiedostonimi
+      "./thumbnails/" + req.file.filename
     );
 
     const { kuvaus, luomispaikka, lajinumero } = req.body;
@@ -89,7 +89,7 @@ const bird_post = async (req, res, next) => {
       kuvaus,
       lajinumero,
       req.user.kayttajanumero,
-      req.file.tiedostonimi,
+      req.file.filename,
       JSON.stringify(luomispaikka),
       next
     );

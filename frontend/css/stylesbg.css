@@ -114,7 +114,7 @@ main {
 #uusimmat, #omatkuvat {
 	margin-left: 4%;
 	font-weight: bold;
-	padding: 1%;
+	padding: 10px 1% 1% 1%;
 	color: #FFFBFA;
 	font-size: 1.3rem;
 }
@@ -131,7 +131,7 @@ h1{
 	margin: 0;
 	padding: 0 0 4px 0;
 	color: #F3A712;
-	font-size: 0.86em;
+	font-size: 0.91em;
 }
 .bgkuva{
 	margin-bottom: 40px;
@@ -176,6 +176,13 @@ h1{
 ul {
 	margin: 0% 5%;
 }
+#footerbgnimi {
+	display: block;
+	font-size: 1.2rem;
+	font-weight: bold;
+	text-align: center;
+	margin: 2% auto;
+}
 @media screen and (max-width: 760px) {
 	.topnav a {display: none;}
 	.topnav a.icon {
@@ -212,5 +219,12 @@ ul {
 	}
 	.bgkuva{
 		margin-bottom: 10px;
+	}
+	#uusimmat, #omatkuvat {
+		margin: auto;
+		font-weight: bold;
+		padding: 10px 1% 1% 1%;
+		color: #FFFBFA;
+		font-size: 1.3rem;
 	}
   }

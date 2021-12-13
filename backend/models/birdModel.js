@@ -7,7 +7,7 @@ const getAllBirds = async (next) => {
   try {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
     const [rows] = await promisePool.execute(`
-    SELECT * FROM tiedosto JOIN laji ON tiedosto.lajinumero = laji.lajinumero JOIN kayttaja ON tiedosto.kayttajanumero = kayttaja.kayttajanumero;`
+    SELECT * FROM tiedosto JOIN laji ON tiedosto.lajinumero = laji.lajinumero JOIN kayttaja ON tiedosto.kayttajanumero = kayttaja.kayttajanumero ORDER BY tiedostonumero DESC;`
   );
     return rows;
   } catch (e) {
@@ -51,11 +51,11 @@ const getBird = async (id, next) => {
 };
 
 const addBird = async (
+  kuvaus,
+  lajinumero,
+  kayttajanumero,
   tiedostonimi,
   luomispaikka,
-  kuvaus,
-  kayttajanumero,
-  lajinumero,
   next
 ) => {
   try {
@@ -100,6 +100,8 @@ const modifyBird = async (
 };
 
 const deleteBird = async (id, kayttajanumero, roolinumero, next) => {
+  let sql1 = "DELETE FROM relationship WHERE tiedostonumero = ?;";
+  let params1 = [id];
   let sql = "DELETE FROM tiedosto WHERE tiedostonumero = ? AND kayttajanumero = ?;";
   let params = [id, kayttajanumero];
   if (roolinumero === 0) {
@@ -107,6 +109,7 @@ const deleteBird = async (id, kayttajanumero, roolinumero, next) => {
     params = [id];
   }
   try {
+    const [rows1] = await promisePool.execute(sql1, params1);
     const [rows] = await promisePool.execute(sql, params);
     return rows;
   } catch (e) {

@@ -34,6 +34,8 @@ let omatTiedot = () => {
   const x = document.getElementById("user-wrapper");
   if (x.style.display === "none") {
     x.style.display = "flex";
+    document.getElementById('kayttajatunnus').placeholder = user.kayttajanimi;
+    document.getElementById('kayttajaemail').placeholder = user.sahkopostiosoite;
   } else {
     x.style.display = "none";
   }
@@ -49,7 +51,7 @@ let muokkaaKuvaus = () => {
     x.style.display = "none";
   }
 };
-document.getElementById("muokkaaLintua").addEventListener("click", muokkaaKuvaus);
+//document.getElementById("muokkaaLintua").addEventListener("click", muokkaaKuvaus);
 
 // Get the modal
 const modal = document.getElementById("register-wrapper");

@@ -52,34 +52,32 @@ const startApp = (logged) => {
 
 // create bird cards
 const createBirdCards = (birds) => {
- 
   // clear ul
   ul.innerHTML = '';
   birds.forEach((bird) => {
     // create li with DOM methods
     const img = document.createElement('img');
-    img.src = bird.tiedostonimi;
+    img.src = url + '/thumbnails/' + bird.tiedostonimi;
     img.alt = "kuva linnusta";
     img.classList.add('resp');
 
     // open large image when clicking image
-    /*
+    
     img.addEventListener('click', () => {
       modalImage.src = url + '/' + bird.tiedostonimi;
       imageModal.alt = bird.suominimi;
       imageModal.classList.toggle('hide');
-      try {
+      /*try {
         const coords = JSON.parse(bird.coords);
         // console.log(luomispaikka);
         addMarker(luomispaikka);
-      } catch (e) {}
-    }); */
+      } catch (e) {}*/
+    }); 
 
     const figure = document.createElement('figure').appendChild(img);
 
     const h2 = document.createElement('h3');
     h2.innerHTML = bird.suominimi;
-
     const p1 = document.createElement('p');
     p1.innerHTML = `Lisätty: <spam id="nimi">${dt
       .fromISO(bird.lisaysaika)
@@ -108,6 +106,8 @@ const createBirdCards = (birds) => {
       const modButton = document.createElement('button');
       modButton.innerHTML = 'Muokkaa';
       modButton.addEventListener('click', () => {
+        document.getElementById('ajaxi').placeholder = bird.suominimi;
+        document.getElementById('kuvausta').placeholder = bird.kuvaus;
         muokkaaKuvaus();
         /*const inputs = modForm.querySelectorAll('input');
         inputs[0].value = bird.suominimi;
@@ -119,24 +119,26 @@ const createBirdCards = (birds) => {
       // delete selected cat
       const delButton = document.createElement('button');
       delButton.innerHTML = 'Poista';
-      console.log('käyttäjänumero', user.kayttajanumero, 'roolinumero', user.roolinumero);
+      //console.log('käyttäjänumero', user.kayttajanumero, 'roolinumero', user.roolinumero);
       delButton.addEventListener('click', async () => {
-        const fetchOptions = {
-          method: 'DELETE',
-          headers: {
-            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-          },
-        };
-        try {
-          const response = await fetch(
-            url + '/bird/' + bird.tiedostonumero,
-            fetchOptions
-          );
-          const json = await response.json();
-          console.log('delete response', json);
-          getUserBird();
-        } catch (e) {
-          console.log(e.message());
+        if(confirm('Haluatko varmasti poistaa kuvan?')){
+          const fetchOptions = {
+            method: 'DELETE',
+            headers: {
+              Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+            },
+          };
+          try {
+            const response = await fetch(
+              url + '/bird/' + bird.tiedostonumero,
+              fetchOptions
+            );
+            const json = await response.json();
+            console.log('delete response', json);
+            getUserBird();
+          } catch (e) {
+            console.log(e.message());
+          }
         }
       });
       li.appendChild(modButton);
@@ -174,6 +176,7 @@ const getPublicBirds = async () => {
   try {
     const response = await fetch(url + '/bird');
     const birds = await response.json();
+    console.log('public Birds', birds);
     createBirdCards(birds);
   } catch (e) {
     console.log(e.message);
@@ -221,7 +224,7 @@ addForm.addEventListener('submit', async (evt) => {
     },
     body: fd,
   };
-  console.log('jotain??', fetchOptions);
+  //console.log('dataa session storagesta', sessionStorage);
   const response = await fetch(url + '/bird', fetchOptions);
   const json = await response.json();
   console.log('add response', json);
