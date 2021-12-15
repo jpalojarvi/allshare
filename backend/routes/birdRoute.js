@@ -41,10 +41,7 @@ router
   .get(bird_get)
   .delete(passport.authenticate("jwt", { session: false }), bird_delete)
   .put(
-<<<<<<< HEAD
     passport.authenticate("jwt", { session: false }),
-=======
->>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
     body("kuvaus"),
     bird_put
   );

@@ -34,25 +34,16 @@ let omatTiedot = () => {
   const x = document.getElementById("user-wrapper");
   if (x.style.display === "none") {
     x.style.display = "flex";
-<<<<<<< HEAD
     document.getElementById("kayttajatunnus").placeholder = user.kayttajanimi;
     document.getElementById("kayttajaemail").placeholder =
       user.sahkopostiosoite;
-=======
-    document.getElementById('kayttajatunnus').placeholder = user.kayttajanimi;
-    document.getElementById('kayttajaemail').placeholder = user.sahkopostiosoite;
->>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
   } else {
     x.style.display = "none";
   }
 };
-<<<<<<< HEAD
 document
   .getElementById("naytaOmatTiedot")
   .addEventListener("click", omatTiedot);
-=======
-document.getElementById("naytaOmatTiedot").addEventListener("click", omatTiedot);
->>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
 
 //Avaa muokkaa lintu modaalin
 let muokkaaKuvaus = () => {
@@ -92,18 +83,9 @@ const getBirdsNames = async () => {
     // Update the placeholder text.
     input.placeholder = "Loading options...";
 
-<<<<<<< HEAD
     const response = await fetch(url + "/bird/names");
     const birdnames = await response.json();
     console.log("birdnames", birdnames);
-=======
-// Handle state changes for the request.
-request.onreadystatechange = (response) => {
-  if (request.readyState === 4) {
-    if (request.status === 200) {
-      // Parse the JSON
-      var jsonOptions = JSON.parse(request.responseText);
->>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
 
     // Loop over the JSON array.
     birdnames.forEach((item) => {

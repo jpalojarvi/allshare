@@ -48,10 +48,7 @@ const startApp = (logged) => {
     }
     getUserBird();
     getUsers();
-<<<<<<< HEAD
     
-=======
->>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
   }else{
     getPublicBirds();
   }
@@ -95,11 +92,7 @@ const createBirdCards = (birds) => {
     p2.innerHTML = `<spam id="nimi">Kuvaus:</spam> ${bird.kuvaus}`;
 
     const p3 = document.createElement('p');
-<<<<<<< HEAD
     p3.innerHTML = `<spam id="nimi">@</spam> ${bird.kayttajanimi}`;
-=======
-    p3.innerHTML = `<spam id="nimi">@:</spam> ${bird.kayttajanimi}`;
->>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
 
     const li = document.createElement('li');
     li.classList.add('lintutaulu');
@@ -111,17 +104,13 @@ const createBirdCards = (birds) => {
     li.appendChild(p1);
     li.appendChild(p3);
     ul.appendChild(li);
-<<<<<<< HEAD
     
-=======
->>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
     if (user.roolinumero === 0 || user.kayttajanumero === bird.kayttajanumero) {    
       // add modify button
 
       const modButton = document.createElement('button');
       modButton.innerHTML = 'Muokkaa';
       modButton.addEventListener('click', () => {
-<<<<<<< HEAD
 
         muokkaaKuvaus();
         const inputs = modForm.querySelectorAll('input');
@@ -134,16 +123,6 @@ const createBirdCards = (birds) => {
         modForm.action = `${url}/bird/${bird.tiedostonumero}`;
         modFormBird.action = `${url}/bird/${bird.tiedostonumero}`;
         //if (user.roolinumero=== 0) modForm.querySelector('select').value = bird.kayttajanumero;
-=======
-        document.getElementById('ajaxi').placeholder = bird.suominimi;
-        document.getElementById('kuvausta').placeholder = bird.kuvaus;
-        muokkaaKuvaus();
-        /*const inputs = modForm.querySelectorAll('input');
-        inputs[0].value = bird.suominimi;
-        inputs[1].value = bird.kuvaus;
-        modForm.action = `${url}/bird/${bird.tiedostonumero}`;
-        if (user.roolinumero=== 0) modForm.querySelector('select').value = bird.kayttajanumero;*/
->>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
       }); 
 
       // delete selected bird

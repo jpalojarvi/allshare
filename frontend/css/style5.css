@@ -101,7 +101,6 @@ button{
   width: 30vw;
   height: 30vh;
 }
-<<<<<<< HEAD
 @media screen and (max-width: 1400px){
   li {
     width: 31%;
@@ -109,19 +108,12 @@ button{
   }
 }
 @media screen and (max-width: 900px){
-=======
-@media screen and (max-width: 760px){
->>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
   li {
     width: 45%;
     margin: .4em;
   }
 }
-<<<<<<< HEAD
 @media screen and (max-width: 500px){
-=======
-@media screen and (max-width: 410px){
->>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
   li {
     width: 95%;
     margin: .3em;
