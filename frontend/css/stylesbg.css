@@ -180,6 +180,13 @@ h1{
 	text-align: center;
 	margin: 2% auto;
 }
+#footerbgnimi {
+	display: block;
+	font-size: 1.2rem;
+	font-weight: bold;
+	text-align: center;
+	margin: 2% auto;
+}
 @media screen and (max-width: 760px) {
 	.topnav a {display: none;}
 	.topnav a.icon {
@@ -220,7 +227,11 @@ h1{
 	#uusimmat, #omatkuvat {
 		margin: auto;
 		font-weight: bold;
+<<<<<<< HEAD
 		padding: 6px 1% 1% 1%;
+=======
+		padding: 10px 1% 1% 1%;
+>>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
 		color: #FFFBFA;
 		font-size: 1.3rem;
 	}

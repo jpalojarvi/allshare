@@ -7,7 +7,11 @@ const getAllBirds = async (next) => {
   try {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
     const [rows] = await promisePool.execute(`
+<<<<<<< HEAD
     SELECT tiedostonumero, tiedostonimi, lisaysaika, kuvaus, tiedosto.kayttajanumero, tiedosto.lajinumero, laji.suominimi, kayttaja.kayttajanimi, kayttaja.kayttajanumero, kayttaja.sahkopostiosoite, kayttaja.roolinumero FROM tiedosto JOIN laji ON tiedosto.lajinumero = laji.lajinumero JOIN kayttaja ON tiedosto.kayttajanumero = kayttaja.kayttajanumero ORDER BY tiedostonumero DESC;`
+=======
+    SELECT * FROM tiedosto JOIN laji ON tiedosto.lajinumero = laji.lajinumero JOIN kayttaja ON tiedosto.kayttajanumero = kayttaja.kayttajanumero ORDER BY tiedostonumero DESC;`
+>>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
   );
     return rows;
   } catch (e) {
@@ -22,7 +26,11 @@ const getBirdsByKeyword = async (next) => {
     const [rows] = await promisePool.execute(`
 	SELECT 
   lajinumero,
+<<<<<<< HEAD
 	suominimi 
+=======
+	suominimi, 
+>>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
 	FROM laji`);
     return rows;
   } catch (e) {

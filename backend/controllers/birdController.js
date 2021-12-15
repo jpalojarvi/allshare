@@ -126,10 +126,19 @@ const bird_put = async (req, res, next) => {
     }*/
 
     const omistaja = req.user.roolinumero === 0 ? req.body.owner : req.user.kayttajanumero;
+<<<<<<< HEAD
     const tulos = await modifyBird(
       req.params.id,
       kuvaus,
       req.user.kayttajanumero,
+=======
+
+    const tulos = await modifyBird(
+      tiedostonimi,
+      kuvaus,
+      omistaja,
+      req.params.tiedostonumero,
+>>>>>>> c1f4aa3ba8bd359d2a371a8233b47310676d5192
       req.user.roolinumero,
       next
     );
