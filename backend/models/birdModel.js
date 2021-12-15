@@ -17,6 +17,19 @@ const getAllBirds = async (next) => {
 };
 //select * from taulu where kenttä like ?;
 //[`%${hakusana}%`]
+
+const getBirdsSearch = async (hakusana, next) => {
+  try {
+    const [rows] = await promisePool.execute(`
+    SELECT tiedostonumero, tiedostonimi, lisaysaika, kuvaus, tiedosto.kayttajanumero, tiedosto.lajinumero, laji.suominimi, kayttaja.kayttajanimi, kayttaja.kayttajanumero, kayttaja.sahkopostiosoite, kayttaja.roolinumero FROM laji JOIN tiedosto ON laji.lajinumero = tiedosto.lajinumero JOIN kayttaja ON tiedosto.kayttajanumero = tiedosto.kayttajanumero WHERE suominimi LIKE ?;`,
+  [`%${hakusana}%`]);
+    return rows;
+  } catch (e) {
+    console.error("getBirdsSearch error", e.message);
+    next(httpError("Database error", 500));
+  }
+};
+
 const getBirdsByKeyword = async (next) => {
   try {
     const [rows] = await promisePool.execute(`
@@ -117,6 +130,7 @@ const deleteBird = async (id, kayttajanumero, roolinumero, next) => {
 
 module.exports = {
   getAllBirds,
+  getBirdsSearch,
   getBirdsByKeyword,
   getBird,
   addBird,

@@ -75,7 +75,7 @@ window.onclick = (event) => {
 
 // DATALIST AJAX HÄRVELI
 
-const input = document.getElementById("ajax");
+const input = document.getElementById("ajaxi");
 const dataList = document.getElementById("listaa");
 //bird names from db
 const getBirdsNames = async () => {
@@ -109,4 +109,4 @@ const getBirdsNames = async () => {
       "Lajiasi ei löydy tietokannasta. Ota yhtyes ylläpitoon :)";
   }
 };
-
+getBirdsNames();

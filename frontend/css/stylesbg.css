@@ -83,7 +83,7 @@ body {
   }
   .topnav .search-container button:hover {
 	background:#7C7C7C;
-	width: 100%;
+	width: auto;
   }
 #bglintu{
 	height: 40px;

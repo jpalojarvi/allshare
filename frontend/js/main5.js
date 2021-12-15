@@ -18,6 +18,7 @@ const ul = document.querySelector('ul');
 const userList = document.querySelector('.add-owner');
 const imageModal = document.querySelector('#image-modal');
 const modalImage = document.querySelector('#image-modal img');
+const searchForm = document.querySelector('#search-form');
 const close = document.querySelector('#image-modal a');
 
 // luxon date libary
@@ -192,6 +193,23 @@ const getPublicBirds = async () => {
   }
 };
 
+//search birds form
+searchForm.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  const data = new FormData(searchForm);
+  const kysely = new URLSearchParams(data);
+  console.log('haku sanaa haetaan', kysely.toString());
+  const response = await fetch(url + '/bird/search?' + kysely);
+  const birdSearch = await response.json();
+  console.log('haku responce', response);
+ 
+  if (!birdSearch.message) {
+    createBirdCards(birdSearch);
+    document.getElementById('uusimmat').innerHTML = 'Tulokset';
+  } else {
+    alert('Haullasi ei löydy kuvia.');
+  }
+});
 
 // create user options to <select>
 const createUserOptions = (users) => {
