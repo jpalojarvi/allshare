@@ -6,7 +6,7 @@ let myFunction = () => {
   } else {
     x.className = "topnav";
   }
-}
+};
 //Avaa kirjautumismodaalin
 let kirjaudu = () => {
   const x = document.getElementById("login-wrapper");
@@ -29,12 +29,39 @@ let rekisteroi = () => {
 };
 document.getElementById("rekisteroidy").addEventListener("click", rekisteroi);
 
+//Avaa omat tiedot modaalin
+let omatTiedot = () => {
+  const x = document.getElementById("user-wrapper");
+  if (x.style.display === "none") {
+    x.style.display = "flex";
+    document.getElementById("kayttajatunnus").placeholder = user.kayttajanimi;
+    document.getElementById("kayttajaemail").placeholder =
+      user.sahkopostiosoite;
+  } else {
+    x.style.display = "none";
+  }
+};
+document
+  .getElementById("naytaOmatTiedot")
+  .addEventListener("click", omatTiedot);
+
+//Avaa muokkaa lintu modaalin
+let muokkaaKuvaus = () => {
+  const x = document.getElementById("edit-bird-wrapper");
+  if (x.style.display === "none") {
+    x.style.display = "flex";
+  } else {
+    x.style.display = "none";
+  }
+};
+//document.getElementById("muokkaaLintua").addEventListener("click", muokkaaKuvaus);
+
 // Get the modal
 const modal = document.getElementById("register-wrapper");
 const modallog = document.getElementById("login-wrapper");
 const modaladd = document.getElementById("add-bird-wrapper");
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
+window.onclick = (event) => {
   if (event.target == modallog) {
     modallog.style.display = "none";
   }
@@ -47,46 +74,39 @@ window.onclick = function (event) {
 };
 
 // DATALIST AJAX HÄRVELI
-// Get the <datalist> and <input> elements.
-var dataList = document.getElementById("json-datalist");
-var input = document.getElementById("ajax");
 
-// Create a new XMLHttpRequest.
-var request = new XMLHttpRequest();
+const input = document.getElementById("ajax");
+const dataList = document.getElementById("listaa");
+//bird names from db
+const getBirdsNames = async () => {
+  try {
+    // Update the placeholder text.
+    input.placeholder = "Loading options...";
 
-// Handle state changes for the request.
-request.onreadystatechange = function (response) {
-  if (request.readyState === 4) {
-    if (request.status === 200) {
-      // Parse the JSON
-      var jsonOptions = JSON.parse(request.responseText);
+    const response = await fetch(url + "/bird/names");
+    const birdnames = await response.json();
+    console.log("birdnames", birdnames);
 
-      // Loop over the JSON array.
-      jsonOptions.forEach(function (item) {
-        // Create a new <option> element.
-        var option = document.createElement("option");
-        // Set the value using the item in the JSON array.
-        option.value = item;
-        // Add the <option> element to the <datalist>.
-        dataList.appendChild(option);
-      });
+    // Loop over the JSON array.
+    birdnames.forEach((item) => {
+      // Create a new <option> element.
+      const option = document.createElement("option");
+      // Set the value using the item in the JSON array.
+      
+      option.value = item.lajinumero;
+      option.innerHTML = item.suominimi;
 
-      // Update the placeholder text.
-      input.placeholder = "Valitse laji";
-    } else {
-      // An error occured :(
-      input.placeholder = "Lajiasi ei löydy tietokannasta. Ota yhtyes ylläpitoon :)";
-    }
+      // Add the <option> element to the <datalist>.
+      input.appendChild(option);
+      dataList.appendChild(option);
+    });
+
+    // Update the placeholder text.
+    input.placeholder = "Kirjoita lajin nimi ja valitse se valikosta";
+  } catch (e) {
+    console.log(e.message);
+    input.placeholder =
+      "Lajiasi ei löydy tietokannasta. Ota yhtyes ylläpitoon :)";
   }
 };
 
-// Update the placeholder text.
-input.placeholder = "Loading options...";
-
-// Set up and make the request.
-request.open(
-  "GET",
-  "https://s3-us-west-2.amazonaws.com/s.cdpn.io/4621/html-elements.json",
-  true
-);
-request.send();

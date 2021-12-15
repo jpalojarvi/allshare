@@ -12,7 +12,7 @@
 }
 
 ul {
-  margin: 0;
+  margin: 0 4%;
   padding: 0;
   list-style-type: none;
   display: flex;
@@ -20,7 +20,7 @@ ul {
 }
 
 li {
-  width: 30%;
+  width: 23.5%;
   margin: .5em;
 }
 
@@ -60,40 +60,38 @@ select {
 }
 
 button{
-
   height: 30px;
   width: auto;
-  
 }
 
 .hide {
   display: none !important;
 }
 
-.modal {
+.modalo {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0,0,0,.7);
   position: fixed;
 }
 
-.modal img {
+.modalo img {
   display: block;
   height: 80vh;
   margin: auto;
   padding-top: 10vh;
 }
 
-.close {
+.closem {
   position: absolute;
   top: 1em;
   right: 1em;
-  color: #fff;
-  text-shadow: #000;
-  font-size: 2em;
+  color: #FFFBFA;
+  text-shadow: #222222;
+  font-size: 1.5em;
 }
 
 #map {
@@ -102,4 +100,22 @@ button{
   right: 5vw;
   width: 30vw;
   height: 30vh;
+}
+@media screen and (max-width: 1400px){
+  li {
+    width: 31%;
+    margin: .4em;
+  }
+}
+@media screen and (max-width: 900px){
+  li {
+    width: 45%;
+    margin: .4em;
+  }
+}
+@media screen and (max-width: 500px){
+  li {
+    width: 95%;
+    margin: .3em;
+  }
 }

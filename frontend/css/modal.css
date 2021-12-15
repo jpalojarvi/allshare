@@ -27,6 +27,13 @@ textarea{
   opacity: 0.8;
 
 }
+#eiloydy{
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  font-size: 0.8rem;
+}
   /* Set a style for all buttons */
   button {
     background-color: #f3a712;

@@ -7,7 +7,7 @@ const getAllBirds = async (next) => {
   try {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
     const [rows] = await promisePool.execute(`
-    SELECT * FROM tiedosto;`
+    SELECT tiedostonumero, tiedostonimi, lisaysaika, kuvaus, tiedosto.kayttajanumero, tiedosto.lajinumero, laji.suominimi, kayttaja.kayttajanimi, kayttaja.kayttajanumero, kayttaja.sahkopostiosoite, kayttaja.roolinumero FROM tiedosto JOIN laji ON tiedosto.lajinumero = laji.lajinumero JOIN kayttaja ON tiedosto.kayttajanumero = kayttaja.kayttajanumero ORDER BY tiedostonumero DESC;`
   );
     return rows;
   } catch (e) {
@@ -19,11 +19,10 @@ const getAllBirds = async (next) => {
 //[`%${hakusana}%`]
 const getBirdsByKeyword = async (next) => {
   try {
-    // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
     const [rows] = await promisePool.execute(`
 	SELECT 
-  Lajinumero,
-	Suominimi, 
+  lajinumero,
+	suominimi 
 	FROM laji`);
     return rows;
   } catch (e) {
@@ -38,9 +37,9 @@ const getBird = async (id, next) => {
       `
 	  SELECT *
 	  FROM tiedosto
-	  JOIN relationship ON 
-	  tiedosto.Tiedostonumero = relationship.Tiedostonumero
-	  WHERE Lajinumero = ?`,
+	  JOIN laji ON
+	  tiedosto.lajinumero = laji.lajinumero
+	  WHERE tiedosto.lajinumero = ?`,
       [id]
     );
     return rows;
@@ -51,17 +50,18 @@ const getBird = async (id, next) => {
 };
 
 const addBird = async (
-  Tiedostonimi,
-  Luomispaikka,
-  Kuvaus,
-  Kayttajanumero,
-  Lajinumero,
+  kuvaus,
+  lajinumero,
+  kayttajanumero,
+  tiedostonimi,
+  luomispaikka,
   next
 ) => {
   try {
     const [rows] = await promisePool.execute(
-      "INSERT INTO tiedosto (Tiedostonimi, Luomispaikka, Kuvaus, Kayttajanumero) VALUES (?, ?, ?, ?, ?);INSERT INTO relationship (Lajinumero, Tiedostonumero)VALUES (?, LAST_INSERT_ID();",
-      [Tiedostonimi, Luomispaikka, Kuvaus, Kayttajanumero, Lajinumero],
+      //"INSERT INTO tiedosto (tiedostonimi, luomispaikka, kuvaus, kayttajanumero) VALUES (?, ?, ?, ?, ?);INSERT INTO relationship (lajinumero, tiedostonumero)VALUES (?, LAST_INSERT_ID();",
+      "INSERT INTO tiedosto (tiedostonimi, luomispaikka, kuvaus, kayttajanumero, lajinumero) VALUES (?, ?, ?, ?, ?);",
+      [tiedostonimi, luomispaikka, kuvaus, kayttajanumero, lajinumero],
      
     );
     return rows;
@@ -72,21 +72,19 @@ const addBird = async (
 };
 
 const modifyBird = async (
-  name,
-  weight,
-  owner,
-  birthdate,
-  bird_id,
-  role,
+  id,
+  kuvaus,
+  kayttajanumero,
+  roolinumero,
   next
 ) => {
   let sql =
-    "UPDATE wop_bird SET name = ?, weight = ?, birthdate = ? WHERE bird_id = ? AND owner = ?;";
-  let params = [name, weight, birthdate, bird_id, owner];
-  if (role === 0) {
+    "UPDATE tiedosto SET kuvaus = ? WHERE tiedostonumero = ? AND kayttajanumero = ?;";
+  let params = [kuvaus, id, kayttajanumero];
+  if (roolinumero === 0) {
     sql =
-      "UPDATE wop_bird SET name = ?, weight = ?, birthdate = ?, owner = ? WHERE bird_id = ?;";
-    params = [name, weight, birthdate, owner, bird_id];
+      "UPDATE tiedosto SET kuvaus = ? WHERE tiedostonumero = ?;";
+    params = [kuvaus, id];
   }
   console.log("sql", sql);
   try {
@@ -98,18 +96,21 @@ const modifyBird = async (
   }
 };
 
-const deleteBird = async (Tiedostonumero, Kayttajanumero, Roolinumero, next) => {
-  let sql = "DELETE FROM tiedosto WHERE Tiedostonumero = ? AND Kayttajanumero = ?";
-  let params = [Tiedostonumero, Kayttajanumero];
-  if (Roolinumero === 0) {
-    sql = "DELETE FROM tiedosto WHERE Tiedostonumero = ?";
+const deleteBird = async (id, kayttajanumero, roolinumero, next) => {
+  let sql1 = "DELETE FROM relationship WHERE tiedostonumero = ?;";
+  let params1 = [id];
+  let sql = "DELETE FROM tiedosto WHERE tiedostonumero = ? AND kayttajanumero = ?;";
+  let params = [id, kayttajanumero];
+  if (roolinumero === 0) {
+    sql = "DELETE FROM tiedosto WHERE tiedostonumero = ?;";
     params = [id];
   }
   try {
+    const [rows1] = await promisePool.execute(sql1, params1);
     const [rows] = await promisePool.execute(sql, params);
     return rows;
   } catch (e) {
-    console.error("getBird error", e.message);
+    console.error("deleteBird error", e.message);
     next(httpError("Database error", 500));
   }
 };
