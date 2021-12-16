@@ -44,6 +44,19 @@ const getBirdsByKeyword = async (next) => {
   }
 };
 
+const getBirdsByUser = async (kayttajanumero, next) => {
+  try {
+    const [rows] = await promisePool.execute(
+      `SELECT tiedostonumero, tiedostonimi, lisaysaika, kuvaus, tiedosto.kayttajanumero, tiedosto.lajinumero, laji.suominimi, kayttaja.kayttajanimi, kayttaja.kayttajanumero, kayttaja.sahkopostiosoite, kayttaja.roolinumero FROM tiedosto JOIN laji ON tiedosto.lajinumero = laji.lajinumero JOIN kayttaja ON tiedosto.kayttajanumero = kayttaja.kayttajanumero WHERE tiedosto.kayttajanumero = ? ORDER BY tiedostonumero DESC;`,
+      [kayttajanumero]
+    );
+    return rows;
+  } catch (e) {
+    console.error("getBird error", e.message);
+    next(httpError("Database error", 500));
+  }
+};
+
 const getBird = async (id, next) => {
   try {
     const [rows] = await promisePool.execute(
@@ -132,6 +145,7 @@ module.exports = {
   getAllBirds,
   getBirdsSearch,
   getBirdsByKeyword,
+  getBirdsByUser,
   getBird,
   addBird,
   modifyBird,

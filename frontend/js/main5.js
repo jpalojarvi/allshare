@@ -195,6 +195,27 @@ const getPublicBirds = async () => {
   }
 };
 
+// hae vain käyttäjän omat kuvat
+const onlyUserBirds = async () => {
+  console.log('hei käyttäjän linnut nappia painettu', user.kayttajanumero);
+  try {
+    const options = {
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('user'),
+      },
+    };
+    const kayttaja = user.kayttajanumero;
+    const kysely = new URLSearchParams(kayttaja);
+    const response = await fetch(url + '/bird/userbirds?' + 'kayttajanumero=' + kayttaja);
+    const birds = await response.json();
+    document.getElementById('uusimmat').innerHTML = 'Tulokset';
+    createBirdCards(birds);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+document.getElementById("omatkuvat").addEventListener("click", onlyUserBirds);
+
 //search birds form
 searchForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();

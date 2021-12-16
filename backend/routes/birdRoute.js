@@ -16,6 +16,7 @@ const {
   bird_list_get,
   bird_list_by_keyword_get,
   bird_list_by_search_get,
+  bird_list_by_user_get,
   bird_get,
   bird_post,
   bird_put,
@@ -40,6 +41,10 @@ router
 router
 .route("/search")
 .get(bird_list_by_search_get);
+
+router
+.route("/userbirds")
+.get(bird_list_by_user_get);
 
 router
   .route("/:id")

@@ -5,6 +5,7 @@ const {
   getAllBirds,
   getBirdsByKeyword,
   getBirdsSearch,
+  getBirdsByUser,
   getBird,
   addBird,
   modifyBird,
@@ -59,6 +60,21 @@ const bird_list_by_search_get = async (req, res, next) => {
     }
   } catch (e) {
     console.log("bird_list_by_search_get error", e.message);
+    next(httpError("internal server error", 500));
+  }
+};
+
+const bird_list_by_user_get = async (req, res, next) => {
+  console.log(req.query.kayttajanumero);
+  try {
+    const birdnames = await getBirdsByUser(req.query.kayttajanumero, next);
+    if (birdnames.length > 0) {
+      res.json(birdnames);
+    } else {
+      next("No birds found", 404);
+    }
+  } catch (e) {
+    console.log("bird_list_by_user_get error", e.message);
     next(httpError("internal server error", 500));
   }
 };
@@ -197,6 +213,7 @@ module.exports = {
   bird_list_get,
   bird_list_by_keyword_get,
   bird_list_by_search_get,
+  bird_list_by_user_get,
   bird_get,
   bird_post,
   bird_put,
