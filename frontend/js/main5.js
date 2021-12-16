@@ -14,6 +14,7 @@ const addUserForm = document.querySelector('#add-user-form');
 const addForm = document.querySelector('#add-bird-form');
 const modForm = document.querySelector('#mod-cat-form');
 const modFormBird = document.querySelector('#mod-bird-form');
+const omatKuvat = document.querySelector('#omatKuvat');
 const ul = document.querySelector('ul');
 const userList = document.querySelector('.add-owner');
 const imageModal = document.querySelector('#image-modal');
@@ -38,6 +39,7 @@ const startApp = (logged) => {
   loginWrapper.style.display = logged ? 'none' : 'none';
   //logOut.style.display = logged ? 'flex' : 'none';
   otsikko.style.display = logged ? 'none' : 'block';
+  omatKuvat.style.display = logged ? 'block' : 'none';
   linnunlisays.style.display = logged ? 'block' : 'none';
   userInfo.innerHTML = logged ? `<span id="nimi">Hei</span> ${user.kayttajanimi}` : '';
   userInfo.style.display = logged? 'block' : 'none';
