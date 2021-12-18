@@ -121,11 +121,11 @@ const bird_post = async (req, res, next) => {
       "./thumbnails/" + req.file.filename
     );
 
-    const { kuvaus, luomispaikka, lajinumero } = req.body;
+    const { kuvaus, luomispaikka, suominimi } = req.body;
 
     const tulos = await addBird(
       kuvaus,
-      lajinumero,
+      suominimi,
       req.user.kayttajanumero,
       req.file.filename,
       JSON.stringify(luomispaikka),

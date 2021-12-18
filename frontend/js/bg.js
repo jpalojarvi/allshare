@@ -93,8 +93,8 @@ const getBirdsNames = async () => {
       const option = document.createElement("option");
       // Set the value using the item in the JSON array.
       
-      option.value = item.lajinumero;
-      option.innerHTML = item.suominimi;
+      option.value = item.suominimi;
+      //option.innerHTML = item.suominimi;
 
       // Add the <option> element to the <datalist>.
       input.appendChild(option);

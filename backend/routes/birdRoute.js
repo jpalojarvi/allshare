@@ -30,7 +30,7 @@ router
 .post(
   passport.authenticate("jwt", { session: false }),
   upload.single("tiedostonimi"),
-  body("lajinumero").isNumeric(),
+  body("suominimi"),
   body("kuvaus"),
   bird_post
 );
